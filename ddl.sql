@@ -312,6 +312,7 @@ CREATE TABLE ElectronicInvoice (
     invoice_number VARCHAR(50) NOT NULL UNIQUE, 
     invoice_date DATETIME NOT NULL, 
     customer_id INT NOT NULL,
+    id_Sale INT NOT NULL,
     veterinarian_id INT,
     service_details TEXT, 
     total_amount DECIMAL(10,2) NOT NULL, 
@@ -320,5 +321,6 @@ CREATE TABLE ElectronicInvoice (
     qr_code BLOB, 
     digital_signature BLOB, 
     FOREIGN KEY (customer_id) REFERENCES Owner(id_owner),
-    FOREIGN KEY (veterinarian_id) REFERENCES Employees(id_employee)
+    FOREIGN KEY (veterinarian_id) REFERENCES Employees(id_employee),
+    FOREIGN KEY (id_Sale) REFERENCES Sales(id_Sale) 
 );
