@@ -252,6 +252,54 @@ INSERT INTO Services (name, date_service, price, details, category) VALUES
 ('Cat Spa', '2024-09-14', 60.00, 'Beauty treatment for cats', 'Grooming'),
 ('Daycare', '2024-10-25', 40.00, 'Daytime care', 'Boarding');
 
+INSERT INTO SpecialActivities (name, description, date_special_activity, place, type) VALUES
+('Annual Pet Vaccination Day', 'Mass vaccination event for pets in the community', '2024-03-15', 'City Central Park', 'Vaccination'),
+('Adoption Weekend', 'Special weekend for pet adoptions with reduced fees', '2024-04-20', 'Pet Shop Main Location', 'Adoption'),
+('Puppy Training Workshop', 'Intensive training program for new dog owners', '2024-05-10', 'Pet Shop Training Center', 'Training'),
+('Senior Pet Health Check', 'Free health screenings for older pets', '2024-06-25', 'City Veterinary Clinic', 'Health Check'),
+('Summer Pet Wellness Fair', 'Community event with multiple veterinary services', '2024-07-12', 'Community Sports Center', 'Vaccination'),
+('Rescue Pet Adoption Drive', 'Special event to find homes for rescued animals', '2024-08-18', 'Local Animal Shelter', 'Adoption'),
+('Advanced Dog Training Seminar', 'Professional training techniques for dog owners', '2024-09-05', 'Conference Hall', 'Training'),
+('Pediatric Pet Health Day', 'Specialized health checks for young animals', '2024-10-03', 'Pet Shop Main Location', 'Health Check'),
+('Winter Vaccination Campaign', 'Preventive vaccination event for multiple species', '2024-11-16', 'City Community Center', 'Vaccination'),
+('Holiday Pet Socialization Workshop', 'Group training and socialization for pets', '2024-12-07', 'Pet Shop Training Center', 'Training');
+
+INSERT INTO TypeExpense (name, description) VALUES
+('Operational Costs', 'Daily running expenses of the pet shop'),
+('Medical Supplies', 'Costs related to medical equipment and pharmaceuticals'),
+('Staff Salaries', 'Monthly wages and compensation for employees'),
+('Maintenance', 'Repair and upkeep of facilities and equipment'),
+('Marketing', 'Advertising and promotional expenses'),
+('Utilities', 'Electricity, water, internet, and other service bills'),
+('Training', 'Costs associated with staff and pet training programs'),
+('Inventory Restocking', 'Purchasing new products for sale'),
+('Insurance', 'Business and liability insurance premiums'),
+('Professional Services', 'External consultant and professional fees');
+
+INSERT INTO Expenses (name, payment_day, amount, id_type_expense, description) VALUES
+('Monthly Electricity Bill', '2024-01-15', 1200.50, 6, 'Electricity expenses for the pet shop and clinic'),
+('Staff Salaries - January', '2024-01-30', 45000.75, 3, 'Monthly wages for all employees'),
+('Medical Equipment Repair', '2024-02-05', 3500.25, 2, 'Maintenance and repair of veterinary equipment'),
+('Advertising Campaign', '2024-02-15', 5000.00, 5, 'Social media and local advertising promotions'),
+('Inventory Restock - Pet Food', '2024-03-10', 8750.60, 8, 'Purchasing new stock of pet food and supplies'),
+('Annual Insurance Premium', '2024-03-25', 12000.00, 9, 'Comprehensive business insurance coverage'),
+('Training Workshop Expenses', '2024-04-05', 2500.30, 7, 'Costs for organizing staff and pet training programs'),
+('Office Maintenance', '2024-04-15', 4200.45, 4, 'Repairs and maintenance of office and clinic spaces'),
+('Consultant Fees', '2024-05-01', 7500.75, 10, 'Payment for external business consultancy services'),
+('Water and Internet Bill', '2024-05-15', 950.25, 6, 'Monthly utility expenses');
+
+INSERT INTO MedicalSupplies (type, supplies, id_pharmaceutical_product) VALUES
+('Surgical Kit', 'Sterile scalpels, surgical scissors, forceps, needle holders', 2),
+('Diagnostic Tools', 'Digital thermometer, otoscope, ophthalmoscope', 5),
+('Wound Care', 'Sterile gauze, wound dressings, medical tape, antiseptic solution', 6),
+('Laboratory Supplies', 'Blood collection tubes, slides, microscope slides, pipettes', 1),
+('Anesthesia Equipment', 'Anesthesia machine, oxygen mask, breathing circuit', 4),
+('Dental Care', 'Dental probes, scalers, dental mirrors, tooth extraction forceps', 3),
+('Vaccination Supplies', 'Sterile syringes, vaccine storage containers, cooling packs', 10),
+('Emergency Kit', 'Defibrillator pads, emergency medications, intubation equipment', 8),
+('Radiology Supplies', 'X-ray film, protective aprons, positioning blocks', 7),
+('Intensive Care Supplies', 'IV sets, central line kits, monitoring leads', 9);
+
 INSERT INTO ElectronicInvoice (invoice_number, invoice_date, customer_id, veterinarian_id, service_details, 
 total_amount, tax_amount, cufe, qr_code, digital_signature) VALUES
 ('INV001-2024', '2024-12-06 10:15:00', 1, 3, 'Vaccination: Rabies vaccine; Deworming treatment', 
@@ -283,55 +331,3 @@ total_amount, tax_amount, cufe, qr_code, digital_signature) VALUES
 
 ('INV010-2024', '2024-12-07 16:30:00', 10, 2, 'Boarding: 3-day stay with medication administration', 
  250000.00, 45000.00, 'a0c9b3f12d345678e901abc4ef56789a', NULL, NULL);
-
--- Insertions for SpecialActivities
-INSERT INTO SpecialActivities (name, description, date_special_activity, place, type) VALUES
-('Annual Pet Vaccination Day', 'Mass vaccination event for pets in the community', '2024-03-15', 'City Central Park', 'Vaccination'),
-('Adoption Weekend', 'Special weekend for pet adoptions with reduced fees', '2024-04-20', 'Pet Shop Main Location', 'Adoption'),
-('Puppy Training Workshop', 'Intensive training program for new dog owners', '2024-05-10', 'Pet Shop Training Center', 'Training'),
-('Senior Pet Health Check', 'Free health screenings for older pets', '2024-06-25', 'City Veterinary Clinic', 'Health Check'),
-('Summer Pet Wellness Fair', 'Community event with multiple veterinary services', '2024-07-12', 'Community Sports Center', 'Vaccination'),
-('Rescue Pet Adoption Drive', 'Special event to find homes for rescued animals', '2024-08-18', 'Local Animal Shelter', 'Adoption'),
-('Advanced Dog Training Seminar', 'Professional training techniques for dog owners', '2024-09-05', 'Conference Hall', 'Training'),
-('Pediatric Pet Health Day', 'Specialized health checks for young animals', '2024-10-03', 'Pet Shop Main Location', 'Health Check'),
-('Winter Vaccination Campaign', 'Preventive vaccination event for multiple species', '2024-11-16', 'City Community Center', 'Vaccination'),
-('Holiday Pet Socialization Workshop', 'Group training and socialization for pets', '2024-12-07', 'Pet Shop Training Center', 'Training');
-
--- Insertions for TypeExpense
-INSERT INTO TypeExpense (name, description) VALUES
-('Operational Costs', 'Daily running expenses of the pet shop'),
-('Medical Supplies', 'Costs related to medical equipment and pharmaceuticals'),
-('Staff Salaries', 'Monthly wages and compensation for employees'),
-('Maintenance', 'Repair and upkeep of facilities and equipment'),
-('Marketing', 'Advertising and promotional expenses'),
-('Utilities', 'Electricity, water, internet, and other service bills'),
-('Training', 'Costs associated with staff and pet training programs'),
-('Inventory Restocking', 'Purchasing new products for sale'),
-('Insurance', 'Business and liability insurance premiums'),
-('Professional Services', 'External consultant and professional fees');
-
--- Insertions for Expenses
-INSERT INTO Expenses (name, payment_day, amount, type_expense_id, description) VALUES
-('Monthly Electricity Bill', '2024-01-15', 1200.50, 6, 'Electricity expenses for the pet shop and clinic'),
-('Staff Salaries - January', '2024-01-30', 45000.75, 3, 'Monthly wages for all employees'),
-('Medical Equipment Repair', '2024-02-05', 3500.25, 2, 'Maintenance and repair of veterinary equipment'),
-('Advertising Campaign', '2024-02-15', 5000.00, 5, 'Social media and local advertising promotions'),
-('Inventory Restock - Pet Food', '2024-03-10', 8750.60, 8, 'Purchasing new stock of pet food and supplies'),
-('Annual Insurance Premium', '2024-03-25', 12000.00, 9, 'Comprehensive business insurance coverage'),
-('Training Workshop Expenses', '2024-04-05', 2500.30, 7, 'Costs for organizing staff and pet training programs'),
-('Office Maintenance', '2024-04-15', 4200.45, 4, 'Repairs and maintenance of office and clinic spaces'),
-('Consultant Fees', '2024-05-01', 7500.75, 10, 'Payment for external business consultancy services'),
-('Water and Internet Bill', '2024-05-15', 950.25, 6, 'Monthly utility expenses');
-
--- Insertions for MedicalSupplies
-INSERT INTO MedicalSupplies (type, supplies, pharmaceutical_product_id) VALUES
-('Surgical Kit', 'Sterile scalpels, surgical scissors, forceps, needle holders', 2),
-('Diagnostic Tools', 'Digital thermometer, otoscope, ophthalmoscope', 5),
-('Wound Care', 'Sterile gauze, wound dressings, medical tape, antiseptic solution', 6),
-('Laboratory Supplies', 'Blood collection tubes, slides, microscope slides, pipettes', 1),
-('Anesthesia Equipment', 'Anesthesia machine, oxygen mask, breathing circuit', 4),
-('Dental Care', 'Dental probes, scalers, dental mirrors, tooth extraction forceps', 3),
-('Vaccination Supplies', 'Sterile syringes, vaccine storage containers, cooling packs', 10),
-('Emergency Kit', 'Defibrillator pads, emergency medications, intubation equipment', 8),
-('Radiology Supplies', 'X-ray film, protective aprons, positioning blocks', 7),
-('Intensive Care Supplies', 'IV sets, central line kits, monitoring leads', 9);
