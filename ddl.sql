@@ -17,9 +17,9 @@ CREATE TABLE TypeSickness (
 CREATE TABLE Sickness (
     id_sickness INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
-    type_sickness_id INT,
+    id_type_sickness INT,
     description TEXT,
-    FOREIGN KEY (type_sickness_id) REFERENCES TypeSickness(id_type_sickness)
+    FOREIGN KEY (id_type_sickness) REFERENCES TypeSickness(id_type_sickness)
 );
 
 CREATE TABLE Identity (
@@ -79,9 +79,9 @@ CREATE TABLE Medicines (
     type ENUM('Antibiotic', 'Anti-inflammatory', 'Antiparasitic') NOT NULL,
     manufacturer VARCHAR(65) NOT NULL,
     due_date DATE NOT NULL,
-    pharmaceutical_product_id INT,
+    id_pharmaceutical_product INT,
     dosage TEXT,
-    FOREIGN KEY (pharmaceutical_product_id) REFERENCES PharmaceuticalProduct(id_pharmaceutical_product)
+    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaceuticalProduct(id_pharmaceutical_product)
 );
 
 CREATE TABLE Vaccines (
@@ -90,17 +90,17 @@ CREATE TABLE Vaccines (
     type VARCHAR(65) NOT NULL,
     date_entry DATE NOT NULL,
     due_date DATE NOT NULL,
-    pharmaceutical_product_id INT,
-    species_id INT,
+    id_pharmaceutical_product INT,
+    id_species INT,
     batch_number VARCHAR(50),
-    FOREIGN KEY (pharmaceutical_product_id) REFERENCES PharmaceuticalProduct(id_pharmaceutical_product),
-    FOREIGN KEY (species_id) REFERENCES Species(id_species)
+    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaceuticalProduct(id_pharmaceutical_product),
+    FOREIGN KEY (id_species) REFERENCES Species(id_species)
 );
 
 CREATE TABLE Pets (
     id_pet INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
-    species_id INT,
+    id_species INT,
     breed VARCHAR(65) NOT NULL,
     date_birth DATE NOT NULL,
     gender ENUM('Female', 'Male', 'Non-binary') NOT NULL,
@@ -110,15 +110,13 @@ CREATE TABLE Pets (
     allergies TEXT,
     chronic_conditions TEXT,
     last_veterinary_visit DATETIME,
-    owner_id INT NOT NULL,
-    identity_id INT,
-    sickness_id INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (species_id) REFERENCES Species(id_species),
-    FOREIGN KEY (owner_id) REFERENCES Owner(id_owner),
-    FOREIGN KEY (identity_id) REFERENCES Identity(id_identity),
-    FOREIGN KEY (sickness_id) REFERENCES Sickness(id_sickness)
+    id_owner INT NOT NULL,
+    id_identity INT,
+    id_sickness INT,
+    FOREIGN KEY (id_species) REFERENCES Species(id_species),
+    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner),
+    FOREIGN KEY (id_identity) REFERENCES Identity(id_identity),
+    FOREIGN KEY (id_sickness) REFERENCES Sickness(id_sickness)
 );
 
 CREATE TABLE MedicalProcedure (
@@ -129,10 +127,10 @@ CREATE TABLE MedicalProcedure (
     exam_analysis BOOLEAN NOT NULL,
     date_procedure DATETIME NOT NULL,
     price DECIMAL(10,2) NOT NULL,
-    pet_id INT,
-    employee_id INT,
-    FOREIGN KEY (pet_id) REFERENCES Pets(id_pet),
-    FOREIGN KEY (employee_id) REFERENCES Employees(id_employee)
+    id_pet INT,
+    id_employee INT,
+    FOREIGN KEY (id_pet) REFERENCES Pets(id_pet),
+    FOREIGN KEY (id_employee) REFERENCES Employees(id_employee)
 );
 
 CREATE TABLE Appointments (
@@ -140,11 +138,11 @@ CREATE TABLE Appointments (
     date_appointment DATETIME NOT NULL,
     reason_visit TEXT NOT NULL,
     recommendations TEXT NOT NULL,
-    employee_id INT,
-    pet_id INT,
+    id_employee INT,
+    id_pet INT,
     status ENUM('Scheduled', 'In Progress', 'Completed', 'Cancelled'),
-    FOREIGN KEY (employee_id) REFERENCES Employees(id_employee),
-    FOREIGN KEY (pet_id) REFERENCES Pets(id_pet)
+    FOREIGN KEY (id_employee) REFERENCES Employees(id_employee),
+    FOREIGN KEY (id_pet) REFERENCES Pets(id_pet)
 );
 
 CREATE TABLE Suppliers (
@@ -159,9 +157,9 @@ CREATE TABLE PurchaseOrders (
     id_purchase_order INT PRIMARY KEY AUTO_INCREMENT,
     purchase_date DATETIME NOT NULL,
     status ENUM('Delivered', 'Pending'),
-    supplier_id INT,
+    id_supplier INT,
     total_amount DECIMAL(10,2),
-    FOREIGN KEY (supplier_id) REFERENCES Suppliers(id_supplier)
+    FOREIGN KEY (id_supplier) REFERENCES Suppliers(id_supplier)
 );
 
 CREATE TABLE PaymentMethod (
@@ -174,18 +172,18 @@ CREATE TABLE Sales (
     id_sale INT PRIMARY KEY AUTO_INCREMENT,
     date_sale DATE NOT NULL,
     total DECIMAL(10,2) NOT NULL,
-    owner_id INT,
-    employee_id INT,
-    FOREIGN KEY (owner_id) REFERENCES Owner(id_owner),
-    FOREIGN KEY (employee_id) REFERENCES Employees(id_employee)
+    id_owner INT,
+    id_employee INT,
+    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner),
+    FOREIGN KEY (id_employee) REFERENCES Employees(id_employee)
 );
 
 CREATE TABLE Invoice (
     id_invoice INT PRIMARY KEY AUTO_INCREMENT,
-    sale_id INT,
+    id_sale INT,
     date_invoice DATE NOT NULL,
     total DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (sale_id) REFERENCES Sales(id_sale)
+    FOREIGN KEY (id_sale) REFERENCES Sales(id_sale)
 );
 
 CREATE TABLE Transactions (
@@ -193,18 +191,18 @@ CREATE TABLE Transactions (
     status ENUM('Accepted', 'Pending', 'Rejected') NOT NULL,
     date DATETIME NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
-    payment_method_id INT,
-    invoice_id INT,
-    customer_id INT,
+    id_payment_method INT,
+    id_invoice INT,
+    id_owner INT,
     notes TEXT,
-    FOREIGN KEY (payment_method_id) REFERENCES PaymentMethod(id_payment_method),
-    FOREIGN KEY (invoice_id) REFERENCES Invoice(id_invoice),
-    FOREIGN KEY (customer_id) REFERENCES Owner(id_owner)
+    FOREIGN KEY (id_payment_method) REFERENCES PaymentMethod(id_payment_method),
+    FOREIGN KEY (id_invoice) REFERENCES Invoice(id_invoice),
+    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner)
 );
 
 CREATE TABLE Adoption (
     id_adoption INT PRIMARY KEY AUTO_INCREMENT,
-    pet_id INT UNIQUE,
+    id_pet INT,
     new_owner_id INT,
     previous_owner_id INT,
     contract_status ENUM('Pending', 'Approved', 'Completed') NOT NULL,
@@ -212,7 +210,7 @@ CREATE TABLE Adoption (
     adoption_date DATE,
     follow_up_date DATE,
     follow_up_notes TEXT,
-    FOREIGN KEY (pet_id) REFERENCES Pets(id_pet),
+    FOREIGN KEY (id_pet) REFERENCES Pets(id_pet),
     FOREIGN KEY (new_owner_id) REFERENCES Owner(id_owner),
     FOREIGN KEY (previous_owner_id) REFERENCES Owner(id_owner)
 );
@@ -246,15 +244,31 @@ CREATE TABLE Expenses (
     name VARCHAR(65) NOT NULL,
     payment_day DATE NOT NULL,
     amount DECIMAL(10,2),
-    type_expense_id INT,
+    id_type_expense INT,
     description TEXT,
-    FOREIGN KEY (type_expense_id) REFERENCES TypeExpense(id_type_expense)
+    FOREIGN KEY (id_type_expense) REFERENCES TypeExpense(id_type_expense)
 );
 
 CREATE TABLE MedicalSupplies (
     id_medical_supplies INT PRIMARY KEY AUTO_INCREMENT,
     type VARCHAR(65) NOT NULL,
     supplies TEXT NOT NULL,
-    pharmaceutical_product_id INT,
-    FOREIGN KEY (pharmaceutical_product_id) REFERENCES PharmaceuticalProduct(id_pharmaceutical_product)
+    id_pharmaceutical_product INT,
+    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaceuticalProduct(id_pharmaceutical_product)
+);
+
+CREATE TABLE ElectronicInvoice (
+    id_electronic_invoice INT PRIMARY KEY AUTO_INCREMENT,
+    invoice_number VARCHAR(50) NOT NULL UNIQUE, 
+    invoice_date DATETIME NOT NULL, 
+    customer_id INT NOT NULL,
+    veterinarian_id INT,
+    service_details TEXT, 
+    total_amount DECIMAL(10,2) NOT NULL, 
+    tax_amount DECIMAL(10,2) NOT NULL,
+    cufe VARCHAR(100) NOT NULL UNIQUE,
+    qr_code BLOB, 
+    digital_signature BLOB, 
+    FOREIGN KEY (customer_id) REFERENCES Owner(id_owner),
+    FOREIGN KEY (veterinarian_id) REFERENCES Employees(id_employee)
 );
