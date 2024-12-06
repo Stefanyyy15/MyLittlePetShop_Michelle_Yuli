@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class ConnectionDB {
     
     private static String url = "jdbc:mysql://localhost:3306/MyLittlePetShop";
-    private static String user = "Stefany";
-    private static String password = "Stefany23#";
+    private static String user = "Empleado";
+    private static String password = "MyLittlePetShop22#";
     
     private static Connection getConnection(){
         Connection conexion = null;
