@@ -32,13 +32,15 @@ CREATE TABLE Employees (
     id_employee INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(65) NOT NULL,
+    second_last_name VARCHAR(65) NOT NULL,
     identity_type ENUM('CC', 'CE', 'Passport') NOT NULL,
     identification_number VARCHAR(15) NOT NULL UNIQUE,
     wage DECIMAL(10,2) NOT NULL,
     position_type ENUM('Assistant', 'Veterinarian', 'Groomer', 'Trainer', 'Admin') NOT NULL,
     hire_date DATE NOT NULL,
     email VARCHAR(100) UNIQUE,
-    phone VARCHAR(15)
+    phone VARCHAR(15),
+    shift ENUM('M', 'A', 'E') 
 );
 
 CREATE TABLE Owner (
@@ -109,6 +111,9 @@ CREATE TABLE Pets (
     microchip_number VARCHAR(50) UNIQUE,
     allergies TEXT,
     chronic_conditions TEXT,
+    dryfood VARCHAR(100) NOT NULL,
+    wetfood VARCHAR(100) NOT NULL,
+    schedule_amount TEXT NOT NULL,
     last_veterinary_visit DATETIME,
     id_owner INT NOT NULL,
     id_identity INT,
@@ -136,11 +141,16 @@ CREATE TABLE MedicalProcedure (
 CREATE TABLE Appointments (
     id_appointment INT PRIMARY KEY AUTO_INCREMENT,
     date_appointment DATETIME NOT NULL,
+    query_type VARCHAR(100) NOT NULL,
+	diagnostic TEXT NOT NULL,
+	treatment TEXT NOT NULL,
     reason_visit TEXT NOT NULL,
     recommendations TEXT NOT NULL,
+    id_owner INT,
     id_employee INT,
     id_pet INT,
     status ENUM('Scheduled', 'In Progress', 'Completed', 'Cancelled'),
+    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner),
     FOREIGN KEY (id_employee) REFERENCES Employees(id_employee),
     FOREIGN KEY (id_pet) REFERENCES Pets(id_pet)
 );
@@ -168,14 +178,54 @@ CREATE TABLE PaymentMethod (
     description TEXT
 );
 
+CREATE TABLE if not exists DetailsPurchaseOrder (
+	id_detail_purchase_order INT PRIMARY KEY AUTO_INCREMENT,
+    id_pharmaceutical_product INT,
+    id_purchase_order INT,
+    amount INT NOT NULL,
+    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaCeuticalProduct(id_pharmaceutical_product),
+    FOREIGN KEY (id_purchase_order) REFERENCES PurchaseOrders(id_purchase_order)
+ );   
+
 CREATE TABLE Sales (
     id_sale INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
     date_sale DATE NOT NULL,
     total DECIMAL(10,2) NOT NULL,
     id_owner INT,
     id_employee INT,
+    id_appoiment INT,
     FOREIGN KEY (id_owner) REFERENCES Owner(id_owner),
-    FOREIGN KEY (id_employee) REFERENCES Employees(id_employee)
+    FOREIGN KEY (id_employee) REFERENCES Employees(id_employee),
+    FOREIGN KEY (id_appointment) REFERENCES Appointments(id_appointment)
+
+);
+
+CREATE TABLE ProductSalesDetails (
+	id_product_sales_details INT PRIMARY KEY AUTO_INCREMENT,
+    id_pharmaceutical_product INT,
+    id_sale INT,
+    amount INT NOT NULL,
+    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaCeuticalProduct(id_pharmaceutical_product),
+    FOREIGN KEY (id_sale) REFERENCES Sales(id_sale)
+);
+
+CREATE TABLE DetailsSalesServices (
+	id_details_sales_service INT PRIMARY KEY AUTO_INCREMENT,
+    id_service INT,
+    id_sale INT,
+    amount INT NOT NULL,
+    FOREIGN KEY (id_service) REFERENCES Services(id_service),
+    FOREIGN KEY (id_sale) REFERENCES Sales(id_sale)
+);
+
+CREATE TABLE ProcedureSalesDetails (
+	id_procedure_sale_detail INT PRIMARY KEY AUTO_INCREMENT,
+    id_medical_procedure INT,
+    id_sale INT,
+    amount INT NOT NULL,
+    FOREIGN KEY (id_medical_procedure) REFERENCES MedicalProcedure(id_medical_procedure),
+    FOREIGN KEY (id_sale) REFERENCES Sales(id_sale)
 );
 
 CREATE TABLE Invoice (
