@@ -1,8 +1,6 @@
-// package com.mycompany.main;
+//package com.mycompany.main;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ConnectionDB {
     
@@ -10,14 +8,24 @@ public class ConnectionDB {
     private static String user = "Empleado";
     private static String password = "MyLittlePetShop22#";
     
-    private static Connection getConnection(){
-        Connection conexion = null;
+    public static Connection getConnection(){
+        Connection connection = null;
         try{
-            conexion = DriverManager.getConnection(url, user, password);
+            connection = DriverManager.getConnection(url, user, password);
             System.out.println("Conexion Establecida");
         }catch (SQLException e){
             System.out.println("Error al conectar");
+            e.printStackTrace();
         }
-        return conexion;
+        return connection;
    }
+    public static void closeConnection(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

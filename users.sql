@@ -1,7 +1,13 @@
-CREATE USER "Empleado@localhost" IDENTIFIED BY "MyLittlePetShop22#";
+CREATE USER 'Empleado'@'localhost' IDENTIFIED BY "MyLittlePetShop22#";
 
-GRANT ALL PRIVILEGES ON *.* TO "Empleado@localhost" WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'Empleado'@'localhost' WITH GRANT OPTION;
 
-CREATE USER "Owner@localhost" IDENTIFIED BY "ILovePets10#";
+CREATE USER 'Owner'@'localhost' IDENTIFIED BY "ILovePets10#";
 
-GRANT SELECT, INSERT ON mylittlepetshop.owner TO "Owner@localhost" WITH GRANT OPTION;
+GRANT SELECT, INSERT ON mylittlepetshop.owner TO 'Owner'@'localhost' WITH GRANT OPTION;
+
+-- SELECT User, Host FROM mysql.user;
+-- DROP USER 'Empleado@localhost';
+
+
+
