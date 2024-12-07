@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS MyLittlePetShop;
+ DROP DATABASE IF EXISTS MyLittlePetShop;
 CREATE DATABASE MyLittlePetShop;
 USE MyLittlePetShop;
 
@@ -109,11 +109,10 @@ CREATE TABLE Pets (
     weight DECIMAL(5,2) NOT NULL,
     height DECIMAL(5,2) NOT NULL,
     microchip_number VARCHAR(50) UNIQUE,
+    dryfood VARCHAR(100) NOT NULL,
+    numberTimes INT NOT NULL,
     allergies TEXT,
     chronic_conditions TEXT,
-    dryfood VARCHAR(100) NOT NULL,
-    wetfood VARCHAR(100) NOT NULL,
-    schedule_amount TEXT NOT NULL,
     last_veterinary_visit DATETIME,
     id_owner INT NOT NULL,
     id_identity INT,
@@ -185,7 +184,16 @@ CREATE TABLE if not exists DetailsPurchaseOrder (
     amount INT NOT NULL,
     FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaCeuticalProduct(id_pharmaceutical_product),
     FOREIGN KEY (id_purchase_order) REFERENCES PurchaseOrders(id_purchase_order)
- );   
+ );  
+
+CREATE TABLE Services (
+    id_service INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(65) NOT NULL,
+    date_service DATE NOT NULL,
+    price DECIMAL(10,2),
+    details TEXT,
+    category ENUM('Grooming', 'Medical', 'Training', 'Boarding')
+);
 
 CREATE TABLE Sales (
     id_sale INT PRIMARY KEY AUTO_INCREMENT,
@@ -194,11 +202,10 @@ CREATE TABLE Sales (
     total DECIMAL(10,2) NOT NULL,
     id_owner INT,
     id_employee INT,
-    id_appoiment INT,
+    id_appointment INT,
     FOREIGN KEY (id_owner) REFERENCES Owner(id_owner),
     FOREIGN KEY (id_employee) REFERENCES Employees(id_employee),
     FOREIGN KEY (id_appointment) REFERENCES Appointments(id_appointment)
-
 );
 
 CREATE TABLE ProductSalesDetails (
@@ -250,30 +257,6 @@ CREATE TABLE Transactions (
     FOREIGN KEY (id_owner) REFERENCES Owner(id_owner)
 );
 
-CREATE TABLE Adoption (
-    id_adoption INT PRIMARY KEY AUTO_INCREMENT,
-    id_pet INT,
-    new_owner_id INT,
-    previous_owner_id INT,
-    contract_status ENUM('Pending', 'Approved', 'Completed') NOT NULL,
-    entry_date DATE NOT NULL,
-    adoption_date DATE,
-    follow_up_date DATE,
-    follow_up_notes TEXT,
-    FOREIGN KEY (id_pet) REFERENCES Pets(id_pet),
-    FOREIGN KEY (new_owner_id) REFERENCES Owner(id_owner),
-    FOREIGN KEY (previous_owner_id) REFERENCES Owner(id_owner)
-);
-
-CREATE TABLE Services (
-    id_service INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(65) NOT NULL,
-    date_service DATE NOT NULL,
-    price DECIMAL(10,2),
-    details TEXT,
-    category ENUM('Grooming', 'Medical', 'Training', 'Boarding')
-);
-
 CREATE TABLE SpecialActivities (
     id_special_activity INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(65) NOT NULL,
@@ -312,7 +295,6 @@ CREATE TABLE ElectronicInvoice (
     invoice_number VARCHAR(50) NOT NULL UNIQUE, 
     invoice_date DATETIME NOT NULL, 
     customer_id INT NOT NULL,
-    id_Sale INT NOT NULL,
     veterinarian_id INT,
     service_details TEXT, 
     total_amount DECIMAL(10,2) NOT NULL, 
@@ -321,6 +303,5 @@ CREATE TABLE ElectronicInvoice (
     qr_code BLOB, 
     digital_signature BLOB, 
     FOREIGN KEY (customer_id) REFERENCES Owner(id_owner),
-    FOREIGN KEY (veterinarian_id) REFERENCES Employees(id_employee),
-    FOREIGN KEY (id_Sale) REFERENCES Sales(id_Sale) 
+    FOREIGN KEY (veterinarian_id) REFERENCES Employees(id_employee)
 );

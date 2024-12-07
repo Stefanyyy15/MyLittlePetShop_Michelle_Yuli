@@ -48,17 +48,16 @@ INSERT INTO Identity (name, photo) VALUES
 ('Medical Implant', NULL),
 ('Tracking Device', NULL);
 
-INSERT INTO Employees (first_name, last_name, identity_type, identification_number, wage, position_type, hire_date, email, phone) VALUES
-('María', 'González', 'CC', '1085678901', 2500.00, 'Veterinarian', '2022-03-15', 'maria.gonzalez@petshop.com', '+573001234567'),
-('Carlos', 'Rodríguez', 'CC', '1087654321', 2200.00, 'Assistant', '2022-06-01', 'carlos.rodriguez@petshop.com', '+573009876543'),
-('Laura', 'Martínez', 'CC', '1023456789', 2800.00, 'Veterinarian', '2021-11-20', 'laura.martinez@petshop.com', '+573002345678'),
-('Juan', 'Pérez', 'CC', '1056789012', 2000.00, 'Groomer', '2023-01-10', 'juan.perez@petshop.com', '+573007654321'),
-('Sofía', 'López', 'CC', '1034567890', 2300.00, 'Trainer', '2022-09-05', 'sofia.lopez@petshop.com', '+573003456789'),
-('Andrés', 'Sánchez', 'CC', '1078978234', 2100.00, 'Assistant', '2023-02-15', 'andres.sanchez@petshop.com', '+573006543210'),
-('Valentina', 'Ramírez', 'CC', '1045678907', 2600.00, 'Veterinarian', '2021-07-30', 'valentina.ramirez@petshop.com', '+573001122334'),
-('Diego', 'Torres', 'CC', '1089012345', 2400.00, 'Admin', '2022-05-12', 'diego.torres@petshop.com', '+573004455667'),
-('Camila', 'Herrera', 'CC', '1056789045', 2700.00, 'Veterinarian', '2022-01-25', 'camila.herrera@petshop.com', '+573005566778'),
-('Miguel', 'Díaz', 'CC', '1023456779', 2150.00, 'Groomer', '2023-04-01', 'miguel.diaz@petshop.com', '+573008899001');
+INSERT INTO Employees (first_name, last_name, second_last_name, identity_type, identification_number, wage, position_type, hire_date, email, phone, shift) VALUES
+('María', 'González', 'Perez', 'CC', '1085678901', 2500.00, 'Veterinarian', '2022-03-15', 'maria.gonzalez@petshop.com', '+573001234567', 'M'),
+('Carlos', 'Rodríguez', 'Sanchez', 'CC', '1087654321', 2200.00, 'Assistant', '2022-06-01', 'carlos.rodriguez@petshop.com', '+573009876543', 'A'),
+('Laura', 'Martínez', 'Calderon', 'CC', '1023456789', 2800.00, 'Veterinarian', '2021-11-20', 'laura.martinez@petshop.com', '+573002345678','M'),
+('Juan', 'Pérez', 'Fandiño' , 'CC', '1056789012', 2000.00, 'Groomer', '2023-01-10', 'juan.perez@petshop.com', '+573007654321', 'E'),
+('Sofía', 'López', 'Robles', 'CC', '1034567890', 2300.00, 'Trainer', '2022-09-05', 'sofia.lopez@petshop.com', '+573003456789', 'M'),
+('Andrés', 'Sánchez', 'Torres', 'CC', '1078978234', 2100.00, 'Assistant', '2023-02-15', 'andres.sanchez@petshop.com', '+573006543210', 'A'),
+('Valentina', 'Ramírez', 'Hernandez', 'CC', '1045678907', 2600.00, 'Veterinarian', '2021-07-30', 'valentina.ramirez@petshop.com', '+573001122334', 'A'),
+('Diego', 'Torres', 'Fernandez', 'CC', '1089012345', 2400.00, 'Admin', '2022-05-12', 'diego.torres@petshop.com', '+573004455667', 'A'),
+('Camila', 'Herrera', 'Santacruz', 'CC', '1056789045', 2700.00, 'Veterinarian', '2022-01-25', 'camila.herrera@petshop.com', '+573005566778', 'M');
 
 INSERT INTO Owner (first_name, last_name, identity_type, identification_number, rut, phone, email, emergency_contact_name, emergency_contact_phone) VALUES
 ('Ana', 'García', 'CC', '1045678901', '1045678901-7', '+573001234567', 'ana.garcia@email.com', 'Juan García', '+573009876543'),
@@ -120,17 +119,17 @@ INSERT INTO Vaccines (name, type, date_entry, due_date, id_pharmaceutical_produc
 ('Neutering', 'Hormonal Control', '2024-09-14', '2025-03-15', 7, 3, 'BATCH-BIRD-001'),
 ('West Nile', 'Viral Preventive', '2024-10-25', '2024-12-15', 9, 6, 'BATCH-FISH-001');
 
-INSERT INTO Pets (name, id_species, breed, date_birth, gender, weight, height, microchip_number, allergies, chronic_conditions, last_veterinary_visit, id_owner, id_identity, id_sickness) VALUES
-('Luna', 1, 'Labrador Retriever', '2020-05-15', 'Female', 25.5, 55.0, 'CHIP-001', 'Pollen', NULL, '2024-01-10 10:30:00', 1, 1, 1),
-('Milo', 2, 'Siamese', '2021-03-22', 'Male', 4.2, 25.0, 'CHIP-002', 'Fish', 'Feline asthma', '2024-02-15 14:45:00', 2, 2, 5),
-('Oreo', 5, 'Holland Lop', '2022-07-10', 'Male', 2.0, 30.0, 'CHIP-003', NULL, NULL, '2024-03-20 11:15:00', 3, 3, 6),
-('Rocky', 1, 'German Shepherd', '2019-11-05', 'Male', 35.0, 65.0, 'CHIP-004', 'Latex', 'Hip dysplasia', '2024-04-05 09:00:00', 4, 4, 3),
-('Whiskers', 2, 'Persian', '2022-01-30', 'Female', 3.8, 20.0, 'CHIP-005', 'Feathers', NULL, '2024-05-12 16:20:00', 5, 5, 2),
-('Pepper', 4, 'Syrian', '2023-02-14', 'Female', 0.1, 10.0, 'CHIP-006', NULL, NULL, '2024-06-18 13:40:00', 6, 6, 7),
-('Max', 1, 'Golden Retriever', '2020-09-20', 'Male', 30.0, 60.0, 'CHIP-007', 'Grass', 'Seasonal allergies', '2024-07-22 10:10:00', 7, 7, 4),
-('Nala', 6, 'Betta', '2022-06-05', 'Female', 0.05, 5.0, 'CHIP-008', NULL, NULL, '2024-08-07 15:30:00', 8, 8, 8),
-('Sonic', 3, 'Canary', '2021-12-12', 'Male', 0.2, 20.0, 'CHIP-009', 'Seeds', NULL, '2024-09-14 11:50:00', 9, 9, 9),
-('Rex', 7, 'Red-Eared Slider', '2019-08-25', 'Male', 0.5, 15.0, 'CHIP-010', NULL, 'Shell problems', '2024-10-25 14:00:00', 10, 10, 10);
+INSERT INTO Pets (name, id_species, breed, date_birth, gender, weight, height, microchip_number, dryfood, numberTimes, allergies, chronic_conditions, last_veterinary_visit, id_owner, id_identity, id_sickness) VALUES
+('Luna', 1, 'Labrador Retriever', '2020-05-15', 'Female', 25.5, 55.0, 'CHIP-001', 'Pedigree', 3, 'Pollen', NULL, '2024-01-10 10:30:00', 1, 1, 1),
+('Milo', 2, 'Siamese', '2021-03-22', 'Male', 4.2, 25.0, 'CHIP-002', 'Whiskas', 2, 'Fish', 'Feline asthma', '2024-02-15 14:45:00', 2, 2, 5),
+('Oreo', 5, 'Holland Lop', '2022-07-10', 'Male', 2.0, 30.0, 'CHIP-003', 'Hay', 2, NULL, NULL, '2024-03-20 11:15:00', 3, 3, 6),
+('Rocky', 1, 'German Shepherd', '2019-11-05', 'Male', 35.0, 65.0, 'CHIP-004', 'Dog Chow', 4, 'Latex', 'Hip dysplasia', '2024-04-05 09:00:00', 4, 4, 3),
+('Whiskers', 2, 'Persian', '2022-01-30', 'Female', 3.8, 20.0, 'CHIP-005', 'Don Cat', 3, 'Feathers', NULL, '2024-05-12 16:20:00', 5, 5, 2),
+('Pepper', 4, 'Syrian', '2023-02-14', 'Female', 0.1, 10.0, 'CHIP-006', 'Seeds', 2, NULL, NULL, '2024-06-18 13:40:00', 6, 6, 7),
+('Max', 1, 'Golden Retriever', '2020-09-20', 'Male', 30.0, 60.0, 'CHIP-007', 'Ringo', 3, 'Grass', 'Seasonal allergies', '2024-07-22 10:10:00', 7, 7, 4),
+('Nala', 6, 'Betta', '2022-06-05', 'Female', 0.05, 5.0, 'CHIP-008', 'BettaPallets', 1, NULL, NULL, '2024-08-07 15:30:00', 8, 8, 8),
+('Sonic', 3, 'Canary', '2021-12-12', 'Male', 0.2, 20.0, 'CHIP-009', 'VitalKraft', 2, 'Seeds', NULL, '2024-09-14 11:50:00', 9, 9, 9),
+('Rex', 7, 'Red-Eared Slider', '2019-08-25', 'Male', 0.5, 15.0, 'CHIP-010', 'ReptoMin', 2, NULL, 'Shell problems', '2024-10-25 14:00:00', 10, 10, 10);
 
 INSERT INTO MedicalProcedure (name, used_inputs, type_surgery, exam_analysis, date_procedure, price, id_pet, id_employee) VALUES
 ('Hip Surgery', 'Anesthesia, Scalpel, Bandages', 'Surgery', false, '2024-01-15 10:00:00', 500.00, 4, 1),
@@ -144,17 +143,17 @@ INSERT INTO MedicalProcedure (name, used_inputs, type_surgery, exam_analysis, da
 ('Wound Treatment', 'Bandages, Antiseptic', 'Surgery', false, '2024-09-14 11:50:00', 180.00, 9, 6),
 ('Ultrasound', 'Ultrasound Equipment', 'Radiography', true, '2024-10-25 14:00:00', 250.00, 10, 4);
 
-INSERT INTO Appointments (date_appointment, reason_visit, recommendations, id_employee, id_pet, status) VALUES
-('2024-01-15 10:00:00', 'Hip Surgery', 'Complete rest for 2 weeks', 1, 4, 'Completed'),
-('2024-02-20 14:30:00', 'Spaying/Neutering', 'Avoid intense exercise for 10 days', 3, 3, 'Completed'),
-('2024-03-10 11:15:00', 'Routine Checkup', 'Administer annual vaccine', 7, 1, 'Completed'),
-('2024-04-05 09:45:00', 'Dental Issue', 'Daily tooth brushing', 2, 2, 'Completed'),
-('2024-05-12 16:20:00', 'Mole Examination', 'Follow-up in 3 months', 9, 5, 'Completed'),
-('2024-06-18 13:40:00', 'General Checkup', 'Balanced diet', 5, 6, 'Completed'),
-('2024-07-22 10:10:00', 'Preventive Consultation', 'Moderate exercise', 1, 7, 'Completed'),
-('2024-08-07 15:30:00', 'Medical Follow-up', 'Continue medication', 3, 8, 'Completed'),
-('2024-09-14 11:50:00', 'Wound Examination', 'Daily bandage change', 6, 9, 'Completed'),
-('2024-10-25 14:00:00', 'Specialized Monitoring', 'Semi-annual monitoring', 4, 10, 'Completed');
+INSERT INTO Appointments (date_appointment, query_type, diagnostic, treatment, reason_visit, recommendations, id_employee, id_pet, status) VALUES
+('2024-01-15 10:00:00', 'Surgery', 'Hip joint issues', 'Surgical procedure', 'Hip Surgery', 'Complete rest for 2 weeks', 1, 4, 'Completed'),
+('2024-02-20 14:30:00', 'Surgery', 'Reproductive control', 'Spay/Neuter procedure', 'Spaying/Neutering', 'Avoid intense exercise for 10 days', 3, 3, 'Completed'),
+('2024-03-10 11:15:00', 'Checkup', 'General health review', 'Vaccination', 'Routine Checkup', 'Administer annual vaccine', 7, 1, 'Completed'),
+('2024-04-05 09:45:00', 'Dental', 'Tooth decay', 'Tooth cleaning', 'Dental Issue', 'Daily tooth brushing', 2, 2, 'Completed'),
+('2024-05-12 16:20:00', 'Examination', 'Skin mole inspection', 'Observation', 'Mole Examination', 'Follow-up in 3 months', 9, 5, 'Completed'),
+('2024-06-18 13:40:00', 'Checkup', 'Healthy weight check', 'Dietary advice', 'General Checkup', 'Balanced diet', 5, 6, 'Completed'),
+('2024-07-22 10:10:00', 'Consultation', 'Preventive care', 'Lifestyle adjustment', 'Preventive Consultation', 'Moderate exercise', 1, 7, 'Completed'),
+('2024-08-07 15:30:00', 'Follow-up', 'Ongoing treatment evaluation', 'Medication review', 'Medical Follow-up', 'Continue medication', 3, 8, 'Completed'),
+('2024-09-14 11:50:00', 'Examination', 'Injury recovery', 'Wound care', 'Wound Examination', 'Daily bandage change', 6, 9, 'Completed'),
+('2024-10-25 14:00:00', 'Monitoring', 'Condition tracking', 'Observation', 'Specialized Monitoring', 'Semi-annual monitoring', 4, 10, 'Completed');
 
 INSERT INTO Suppliers (company_name, contact, email, address) VALUES
 ('PetCare Supplies', '3001234567', 'sales@petcaresupplies.com', '72nd Street #10-15, Bogotá'),
@@ -192,17 +191,17 @@ INSERT INTO PaymentMethod (name, description) VALUES
 ('Mobile Payment', 'Payment through mobile apps'),
 ('Store Credit', 'Credit accumulated in the store');
 
-INSERT INTO Sales (date_sale, total, id_owner, id_employee) VALUES
-('2024-01-15', 150.50, 1, 2),
-('2024-02-20', 250.75, 2, 5),
-('2024-03-10', 100.25, 3, 7),
-('2024-04-05', 300.00, 4, 1),
-('2024-05-12', 200.60, 5, 9),
-('2024-06-18', 180.30, 6, 3),
-('2024-07-22', 220.45, 7, 6),
-('2024-08-07', 175.90, 8, 4),
-('2024-09-14', 260.75, 9, 8),
-('2024-10-25', 190.25, 10, 5);
+INSERT INTO Sales (name, date_sale, total, id_owner, id_employee, id_appointment) VALUES
+('Product Purchase', '2024-01-15', 150.50, 1, 2, 1),
+('Surgery Payment', '2024-02-20', 250.75, 2, 5, 2),
+('Routine Checkup', '2024-03-10', 100.25, 3, 7, 3),
+('Dental Cleaning', '2024-04-05', 300.00, 4, 1, 4),
+('Skin Treatment', '2024-05-12', 200.60, 5, 9, 5),
+('Vaccination', '2024-06-18', 180.30, 6, 3, 6),
+('Preventive Care', '2024-07-22', 220.45, 7, 6, 7),
+('Follow-Up Visit', '2024-08-07', 175.90, 8, 4, 8),
+('Injury Recovery', '2024-09-14', 260.75, 9, 8, 9),
+('Special Monitoring', '2024-10-25', 190.25, 10, 5, 10);
 
 INSERT INTO Invoice (id_sale, date_invoice, total) VALUES
 (1, '2024-01-15', 150.50),
@@ -228,18 +227,6 @@ INSERT INTO Transactions (status, date, amount, id_payment_method, id_invoice, i
 ('Accepted', '2024-09-14 11:50:00', 260.75, 9, 9, 9, 'Mobile payment'),
 ('Accepted', '2024-10-25 14:00:00', 190.25, 10, 10, 10, 'Store credit');
 
-INSERT INTO Adoption (id_pet, new_owner_id, previous_owner_id, contract_status, entry_date, adoption_date, follow_up_date, follow_up_notes) VALUES
-(3, 5, 1, 'Completed', '2024-01-15', '2024-02-01', '2024-05-15', 'Satisfactory adaptation'),
-(6, 2, 7, 'Completed', '2024-02-20', '2024-03-10', '2024-06-20', 'Positive follow-up'),
-(9, 8, 4, 'Completed', '2024-03-10', '2024-04-05', '2024-07-10', 'Successful family integration'),
-(1, 10, 6, 'Completed', '2024-04-05', '2024-05-12', '2024-08-05', 'Good relationship with the new family'),
-(7, 3, 9, 'Completed', '2024-05-12', '2024-06-18', '2024-09-12', 'Happy pet in a new home'),
-(4, 1, 5, 'Completed', '2024-06-18', '2024-07-22', '2024-10-18', 'Adaptation without problems'),
-(2, 6, 8, 'Completed', '2024-07-22', '2024-08-07', '2024-11-22', 'Favorable follow-up'),
-(5, 4, 2, 'Completed', '2024-08-07', '2024-09-14', '2024-12-07', 'Complete integration'),
-(8, 7, 3, 'Completed', '2024-09-14', '2024-10-25', '2025-01-14', 'Delighted family'),
-(10, 9, 5, 'Completed', '2024-10-25', '2024-11-15', '2025-02-25', 'Successful adoption');
-
 INSERT INTO Services (name, date_service, price, details, category) VALUES
 ('Full Bath', '2024-01-15', 50.00, 'Bath with specialized shampoo', 'Grooming'),
 ('Veterinary Consultation', '2024-02-20', 80.00, 'General health check-up', 'Medical'),
@@ -251,6 +238,38 @@ INSERT INTO Services (name, date_service, price, details, category) VALUES
 ('Specialized Consultation', '2024-08-07', 100.00, 'Consultation with a specialist', 'Medical'),
 ('Cat Spa', '2024-09-14', 60.00, 'Beauty treatment for cats', 'Grooming'),
 ('Daycare', '2024-10-25', 40.00, 'Daytime care', 'Boarding');
+
+INSERT INTO ElectronicInvoice (invoice_number, invoice_date, customer_id, veterinarian_id, service_details, 
+total_amount, tax_amount, cufe, qr_code, digital_signature) VALUES
+('INV001-2024', '2024-12-06 10:15:00', 1, 3, 'Vaccination: Rabies vaccine; Deworming treatment', 
+ 50000.00, 9000.00, '3e84fa12c9d14e67a8d2f8a1b0c12345', NULL, NULL),
+
+('INV002-2024', '2024-12-06 11:00:00', 2, 4, 'Consultation: General health check; Prescription for antibiotics', 
+ 80000.00, 14400.00, '7bfa3c9a2d714f908d6b1234efa78523', NULL, NULL),
+
+('INV003-2024', '2024-12-06 14:30:00', 3, 2, 'Surgery: Sterilization; Post-op care', 
+ 300000.00, 54000.00, 'af78291c30a24938b7ef9d5c1b345678', NULL, NULL),
+
+('INV004-2024', '2024-12-06 15:45:00', 4, NULL, 'Purchase: Flea shampoo (1); Dog food (5kg)', 
+ 120000.00, 21600.00, '9c4f3176e5b14a60b8f2a3d1efca5678', NULL, NULL),
+
+('INV005-2024', '2024-12-07 09:00:00', 5, 1, 'Training: Basic obedience course, first session', 
+ 60000.00, 10800.00, 'c89a1f02d12340e5f9b3a87efa4c5678', NULL, NULL),
+
+('INV006-2024', '2024-12-07 10:30:00', 6, 2, 'Grooming: Full grooming session (bath, haircut, nail trimming)', 
+ 70000.00, 12600.00, 'b67d01234a5c980123f4e9f56abc7890', NULL, NULL),
+
+('INV007-2024', '2024-12-07 12:00:00', 7, 3, 'Medical procedure: X-ray examination; Sedation included', 
+ 150000.00, 27000.00, 'd0123456fa8c9b7e123f4a0efbc56789', NULL, NULL),
+
+('INV008-2024', '2024-12-07 13:45:00', 8, 1, 'Vaccination: Distemper and parvovirus combo vaccine', 
+ 90000.00, 16200.00, '4f9e123abcd5fa6789012b3c7890ef45', NULL, NULL),
+
+('INV009-2024', '2024-12-07 15:00:00', 9, NULL, 'Adoption fee: Adult cat; Includes vaccinations and sterilization', 
+ 200000.00, 36000.00, '123fa8d9b4c5670e9f01abc234ef5678', NULL, NULL),
+
+('INV010-2024', '2024-12-07 16:30:00', 10, 2, 'Boarding: 3-day stay with medication administration', 
+ 250000.00, 45000.00, 'a0c9b3f12d345678e901abc4ef56789a', NULL, NULL);
 
 INSERT INTO SpecialActivities (name, description, date_special_activity, place, type) VALUES
 ('Annual Pet Vaccination Day', 'Mass vaccination event for pets in the community', '2024-03-15', 'City Central Park', 'Vaccination'),
@@ -300,34 +319,50 @@ INSERT INTO MedicalSupplies (type, supplies, id_pharmaceutical_product) VALUES
 ('Radiology Supplies', 'X-ray film, protective aprons, positioning blocks', 7),
 ('Intensive Care Supplies', 'IV sets, central line kits, monitoring leads', 9);
 
-INSERT INTO ElectronicInvoice (invoice_number, invoice_date, customer_id, veterinarian_id, service_details, 
-total_amount, tax_amount, cufe, qr_code, digital_signature) VALUES
-('INV001-2024', '2024-12-06 10:15:00', 1, 3, 'Vaccination: Rabies vaccine; Deworming treatment', 
- 50000.00, 9000.00, '3e84fa12c9d14e67a8d2f8a1b0c12345', NULL, NULL),
+INSERT INTO ProductSalesDetails (id_pharmaceutical_product, id_sale, amount) VALUES
+(1, 1, 5),
+(2, 2, 3),
+(3, 3, 7),
+(4, 4, 10),
+(5, 5, 2),
+(6, 6, 8),
+(7, 7, 1),
+(8, 8, 4),
+(9, 9, 6),
+(10, 10, 9);
 
-('INV002-2024', '2024-12-06 11:00:00', 2, 4, 'Consultation: General health check; Prescription for antibiotics', 
- 80000.00, 14400.00, '7bfa3c9a2d714f908d6b1234efa78523', NULL, NULL),
+INSERT INTO DetailsSalesServices (id_service, id_sale, amount) VALUES
+(1, 1, 2),
+(2, 2, 1),
+(3, 3, 4),
+(4, 4, 3),
+(5, 5, 5),
+(6, 6, 2),
+(7, 7, 6),
+(8, 8, 1),
+(9, 9, 3),
+(10, 10, 7);
 
-('INV003-2024', '2024-12-06 14:30:00', 3, 2, 'Surgery: Sterilization; Post-op care', 
- 300000.00, 54000.00, 'af78291c30a24938b7ef9d5c1b345678', NULL, NULL),
+INSERT INTO ProcedureSalesDetails (id_medical_procedure, id_sale, amount) VALUES
+(1, 1, 1),
+(2, 2, 3),
+(3, 3, 2),
+(4, 4, 4),
+(5, 5, 5),
+(6, 6, 6),
+(7, 7, 1),
+(8, 8, 3),
+(9, 9, 7),
+(10, 10, 9);
 
-('INV004-2024', '2024-12-06 15:45:00', 4, NULL, 'Purchase: Flea shampoo (1); Dog food (5kg)', 
- 120000.00, 21600.00, '9c4f3176e5b14a60b8f2a3d1efca5678', NULL, NULL),
-
-('INV005-2024', '2024-12-07 09:00:00', 5, 1, 'Training: Basic obedience course, first session', 
- 60000.00, 10800.00, 'c89a1f02d12340e5f9b3a87efa4c5678', NULL, NULL),
-
-('INV006-2024', '2024-12-07 10:30:00', 6, 2, 'Grooming: Full grooming session (bath, haircut, nail trimming)', 
- 70000.00, 12600.00, 'b67d01234a5c980123f4e9f56abc7890', NULL, NULL),
-
-('INV007-2024', '2024-12-07 12:00:00', 7, 3, 'Medical procedure: X-ray examination; Sedation included', 
- 150000.00, 27000.00, 'd0123456fa8c9b7e123f4a0efbc56789', NULL, NULL),
-
-('INV008-2024', '2024-12-07 13:45:00', 8, 1, 'Vaccination: Distemper and parvovirus combo vaccine', 
- 90000.00, 16200.00, '4f9e123abcd5fa6789012b3c7890ef45', NULL, NULL),
-
-('INV009-2024', '2024-12-07 15:00:00', 9, NULL, 'Adoption fee: Adult cat; Includes vaccinations and sterilization', 
- 200000.00, 36000.00, '123fa8d9b4c5670e9f01abc234ef5678', NULL, NULL),
-
-('INV010-2024', '2024-12-07 16:30:00', 10, 2, 'Boarding: 3-day stay with medication administration', 
- 250000.00, 45000.00, 'a0c9b3f12d345678e901abc4ef56789a', NULL, NULL);
+INSERT INTO DetailsPurchaseOrder (id_pharmaceutical_product, id_purchase_order, amount) VALUES
+(1, 1, 10),
+(2, 2, 5),
+(3, 3, 7),
+(4, 4, 3),
+(5, 5, 8),
+(6, 6, 4),
+(7, 7, 2),
+(8, 8, 9),
+(9, 9, 6),
+(10, 10, 1);
