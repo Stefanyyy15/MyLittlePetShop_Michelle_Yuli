@@ -8,11 +8,16 @@ This project is a system that allows you to efficiently manage the operations of
 
 | Index | Title |
 | ------ | --------------- |
-| 1 | System Requirements |
-| 2 | Installation |
-| 3 | Database Structure |
-| 4 | UML Diagram |
-| 5 | Normalization |
+| 1. | [System Requirements] (#System Requirements) |
+| 2. | Installation |
+| 1. | [Project Description](#Project_Description) |
+| 2. | [Database Image](#Database_Image) |
+| 3. | [Database Structure](#Database_Structure) |
+| 4. | [Class Diagram Image of the Database](#Class_Diagram_Image_of_the_Database) |
+| 5. | [Requirements](#Requirements) |
+| 6. | [Technologies Used](#Technologies_Used) |
+| 6. | [Installation and Setup](#Installation_and_Setup) |
+| 10.| [Authors](#Authors) |
 | 6 | FAQs |
 | 7 | License |
 | 8 | Group |
@@ -45,3 +50,148 @@ Go to file
 ```bash
   code .
 ```
+
+## Database Image
+
+![DataModel](<img/Data Model1!Veterinaria_1.png>)
+
+## Main Features
+
+### Main Menu
+
+- **Owner & Pet:** Manage pet owners and their pets.
+
+- **Pharmaceutical Product:** Manage pharmaceutical products, vaccines, and medicines.
+
+- **Medical Procedure & Service:** Record and control medical procedures and services.
+
+- **Supplier & Inventory:** Manage suppliers and inventory.
+
+- **Agenda:** Control appointments and schedules (not yet implemented).
+
+- **Invoice:** Generate and manage invoices.
+
+- **Report & Analysis:** Generate reports and perform analysis (not yet implemented).
+
+- **Special Activities:** Manage special activities.
+
+### Owner and Pet Management
+
+- **Register Owner:** Add a new owner to the system.
+
+- **List Owners:** View the list of all registered owners.
+
+- **Edit Owner:** Update information about an existing owner.
+
+- **Delete Owner:** Remove an owner from the system.
+
+- **Register Pet:** Add a new pet associated with an owner.
+
+- **List Pets:** View the list of all registered pets.
+
+- **Edit Pet:** Update information about a pet.
+
+- **Delete Pet:** Remove a pet from the system.
+
+### Pharmaceutical Product Management
+
+- **Register Pharmaceutical Product:** Add new pharmaceutical products to the inventory.
+
+- **List Pharmaceutical Products:** View all available pharmaceutical products.
+
+- **Edit Pharmaceutical Product:** Update the details of a product.
+
+- **Delete Pharmaceutical Product:** Remove a product from the inventory.
+
+- **Register Vaccine:** Add new vaccines to the system.
+
+- **List Vaccines:** View available vaccines.
+
+- **Edit Vaccine:** Update vaccine information.
+
+- **Delete Vaccine:** Remove a vaccine from the system.
+
+### Medical Procedures and Services Management
+
+- **Register Medical Procedure:** Add available medical procedures.
+
+- **List Medical Procedures:** View all registered procedures.
+
+- **Edit Medical Procedure:** Update details of a procedure.
+
+- **Delete Medical Procedure:** Remove a procedure from the system.
+
+- **Register Service:** Add additional services.
+
+- **List Services:** View all available services.
+
+- **Edit Service:** Update details of a service.
+
+- **Delete Service:** Remove a service from the system.
+
+### Supplier and Inventory Management
+
+- **Register Supplier:** Add new suppliers.
+
+- **List Suppliers:** View the list of registered suppliers.
+
+- **Edit Supplier:** Update supplier information.
+
+- **Delete Supplier:** Remove a supplier.
+
+- **Register Inventory Product:** Add products to the inventory.
+
+- **List Inventory Products:** View stored products.
+
+- **Edit Inventory Product:** Update details of an inventory product.
+
+- **Delete Inventory Product:** Remove products from the inventory.
+
+### Invoicing
+
+- **Register Invoice:** Create a new invoice.
+
+- **List Invoices:** View all generated invoices.
+
+- **Edit Invoice:** Update invoice details.
+
+- **Delete Invoice:** Cancel an invoice.
+
+### Special Activities
+
+- **Register Special Activity:** Create a new special activity.
+
+- **List Special Activities:** View registered special activities.
+
+- **Edit Special Activity:** Update information about a special activity.
+
+- **Delete Special Activity:** Remove a special activity.
+
+## Contributions
+
+| Type of contribution | Name | Comments |
+|:---------------------|:--------:|------------:|
+| Teamwork | Both | We organize ourselves and distribute tasks efficiently and effectively.|
+| Help | Both | We support each other when we encounter obstacles or blocks. |
+| Diagram | Daniel | Created the diagram quickly, clearly and consistent with the requirements.|
+| Readme | Stefany |I wrote the README according to the instructions, ensuring its clarity. |
+
+
+## License
+
+This project is licensed under the MIT License. 
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+
+## Contact
+
+If you have any questions or would like more information, do not hesitate to contact us:
+
+- **Name**: Michelle
+- **GitHub**: [https://github.com/miDaya02](https://github.com/miDaya02)
+
+- **Name**: Stefany
+- **GitHub**: [https://github.com/Stefanyyy15](https://github.com/Stefanyyy15)
+
+---
