@@ -243,7 +243,7 @@ public class Pet {
         System.out.println("Do you already have a registered owner? (yes/no)");
         String response = scanner.nextLine().toLowerCase();
 
-        int ownerId;
+        int ownerId = -1;
         if (response.equals("no")) {
             System.out.println("---- Register New Owner ----");
             ownerId = OwnerCRUD.registerNewOwner();
@@ -252,8 +252,22 @@ public class Pet {
                 return;
             }
         } else {
-            System.out.print("Enter Owner ID: ");
-            ownerId = Integer.parseInt(scanner.nextLine());
+            String ownerIdentification = null;
+            boolean ownerValid = false;
+            while (!ownerValid) {
+                System.out.println("\nBuscar propietario por número de identificación");
+                ownerIdentification = inputWithValidation(scanner, "Enter Owner Identification Number: ", "\\d+", "Invalid identification number. Only numbers are allowed.");
+                if (OwnerCRUD.searchOwnerByIdentification(ownerIdentification)) {
+                    ownerId = Sale.getOwnerIdByIdentification(ownerIdentification);
+                    if (ownerId != -1) {
+                        ownerValid = true;
+                    } else {
+                        System.out.println("Error getting owner ID. Please try again.");
+                    }
+                } else {
+                    System.out.println("Owner not found. Please try again.");
+                }
+    }
         }
 
         try (Connection conn = ConnectionDB.getConnection()) {

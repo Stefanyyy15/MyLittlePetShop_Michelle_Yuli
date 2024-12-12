@@ -3,10 +3,13 @@ package com.mycompany.main;
 import com.mycompany.main.entity.*;
 import com.mycompany.main.entity.Appointment.AppointmentManagement;
 import com.mycompany.main.entity.Employee.EmployeeCRUD;
+import com.mycompany.main.entity.MedicalProcedure.MedicalProcedureCrud;
 import com.mycompany.main.entity.Owner.OwnerCRUD;
 import com.mycompany.main.entity.MedicalSupplie.MedicalSuppliesCRUD;
 import com.mycompany.main.entity.Medicine.MedicineCRUD;
 import static com.mycompany.main.entity.PharmaceuticalProduct.*;
+import com.mycompany.main.entity.PharmaceuticalProduct.PharmaceuticalProductCRUD;
+import com.mycompany.main.entity.Supplier.SupplierCrud;
 import java.util.Scanner;
 
 public class Main {
@@ -118,13 +121,13 @@ public class Main {
 
             switch (inventoryOption) {
                 case 1 ->
-                    Supplier.registerSupplier();
+                    SupplierCrud.registerSupplier();
                 case 2 ->
-                    Supplier.listSuppliers();
+                    SupplierCrud.listSuppliers();
                 case 3 ->
-                    Supplier.editSupplier();
+                    SupplierCrud.editSupplier();
                 case 4 ->
-                    Supplier.deleteSupplier();
+                    SupplierCrud.deleteSupplier();
                 case 5 ->
                     EmployeeCRUD.registerNewEmployee();
                 case 6 ->
@@ -162,13 +165,13 @@ public class Main {
 
             switch (ProcedureOption) {
                 case 1 ->
-                    MedicalProcedure.registerMedicalProcedure();
+                    MedicalProcedureCrud.registerMedicalProcedure();
                 case 2 ->
-                    MedicalProcedure.listMedicalProcedures();
+                    MedicalProcedureCrud.listMedicalProcedures();
                 case 3 ->
-                    MedicalProcedure.editMedicalProcedure();
+                    MedicalProcedureCrud.editMedicalProcedure();
                 case 4 ->
-                    MedicalProcedure.deleteMedicalProcedure();
+                    MedicalProcedureCrud.deleteMedicalProcedure();
                 case 5 ->
                     Service.registerService();
                 case 6 ->
@@ -215,13 +218,13 @@ public class Main {
 
             switch (pharmaceuticaloption) {
                 case 1 ->
-                    registerPharmaceuticalProduct();
+                    PharmaceuticalProductCRUD.registerPharmaceuticalProduct();
                 case 2 ->
-                    listPharmaceuticalProducts();
+                    PharmaceuticalProductCRUD.listPharmaceuticalProducts();
                 case 3 ->
-                    editPharmaceuticalProduct();
+                    PharmaceuticalProductCRUD.editPharmaceuticalProduct();
                 case 4 ->
-                    deletePharmaceuticalProduct();
+                    PharmaceuticalProductCRUD.deletePharmaceuticalProduct();
                 case 5 ->
                     Vaccine.registerVaccine();
                 case 6 ->

@@ -1,4 +1,4 @@
- DROP DATABASE IF EXISTS MyLittlePetShop;
+DROP DATABASE IF EXISTS MyLittlePetShop;
 CREATE DATABASE MyLittlePetShop;
 USE MyLittlePetShop;
 
@@ -19,13 +19,7 @@ CREATE TABLE Sickness (
     name VARCHAR(100) NOT NULL,
     id_type_sickness INT,
     description TEXT,
-    FOREIGN KEY (id_type_sickness) REFERENCES TypeSickness(id_type_sickness)
-);
-
-CREATE TABLE Identity (
-    id_identity INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(65) NOT NULL,
-    photo BLOB
+    FOREIGN KEY (id_type_sickness) REFERENCES TypeSickness(id_type_sickness) ON DELETE CASCADE
 );
 
 CREATE TABLE Employees (
@@ -52,17 +46,9 @@ CREATE TABLE Owner (
     rut VARCHAR(65),
     phone VARCHAR(15) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
+    address TEXT NOT NULL,
     emergency_contact_name VARCHAR(100),
-    emergency_contact_phone VARCHAR(15)
-);
-
-CREATE TABLE Address (
-    id_address INT PRIMARY KEY AUTO_INCREMENT,
-    id_owner INT NOT NULL UNIQUE,
-    type_via ENUM('Street', 'Avenue', 'Diagonal', 'Transversal', 'Circle'),
-    address VARCHAR(100) NOT NULL,
-    indications TEXT,
-    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner)
+    emergency_contact_phone VARCHAR(15) 
 );
 
 CREATE TABLE PharmaceuticalProduct (
@@ -72,8 +58,7 @@ CREATE TABLE PharmaceuticalProduct (
     price DECIMAL(10,2) NOT NULL,
     stock_quantity INT NOT NULL,
     expiration_date DATE,
-    manufacturer VARCHAR(100),
-    product_type ENUM('Medicine', 'Vaccine', 'Supply') NOT NULL
+    manufacturer VARCHAR(100)
 );
 
 CREATE TABLE Medicines (
@@ -83,7 +68,7 @@ CREATE TABLE Medicines (
     due_date DATE NOT NULL,
     id_pharmaceutical_product INT,
     dosage TEXT,
-    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaceuticalProduct(id_pharmaceutical_product)
+    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaceuticalProduct(id_pharmaceutical_product) ON DELETE CASCADE
 );
 
 CREATE TABLE Vaccines (
@@ -95,8 +80,8 @@ CREATE TABLE Vaccines (
     id_pharmaceutical_product INT,
     id_species INT,
     batch_number VARCHAR(50),
-    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaceuticalProduct(id_pharmaceutical_product),
-    FOREIGN KEY (id_species) REFERENCES Species(id_species)
+    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaceuticalProduct(id_pharmaceutical_product) ON DELETE CASCADE,
+    FOREIGN KEY (id_species) REFERENCES Species(id_species) ON DELETE CASCADE
 );
 
 CREATE TABLE Pets (
@@ -109,18 +94,18 @@ CREATE TABLE Pets (
     weight DECIMAL(5,2) NOT NULL,
     height DECIMAL(5,2) NOT NULL,
     microchip_number VARCHAR(50) UNIQUE,
+    tatto boolean not null,
     dryfood VARCHAR(100) NOT NULL,
     numberTimes INT NOT NULL,
     allergies TEXT,
     chronic_conditions TEXT,
     last_veterinary_visit DATETIME,
+    adoption_status ENUM('ADOPTED', 'NOT_ADOPTED', 'IN_PROGRESS'),
     id_owner INT NOT NULL,
-    id_identity INT,
     id_sickness INT,
-    FOREIGN KEY (id_species) REFERENCES Species(id_species),
-    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner),
-    FOREIGN KEY (id_identity) REFERENCES Identity(id_identity),
-    FOREIGN KEY (id_sickness) REFERENCES Sickness(id_sickness)
+    FOREIGN KEY (id_species) REFERENCES Species(id_species) ON DELETE CASCADE,
+    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner) ON DELETE CASCADE,
+    FOREIGN KEY (id_sickness) REFERENCES Sickness(id_sickness) ON DELETE CASCADE
 );
 
 CREATE TABLE MedicalProcedure (
@@ -133,11 +118,11 @@ CREATE TABLE MedicalProcedure (
     price DECIMAL(10,2) NOT NULL,
     id_pet INT,
     id_employee INT,
-    FOREIGN KEY (id_pet) REFERENCES Pets(id_pet),
-    FOREIGN KEY (id_employee) REFERENCES Employees(id_employee)
+    FOREIGN KEY (id_pet) REFERENCES Pets(id_pet) ON DELETE CASCADE,
+    FOREIGN KEY (id_employee) REFERENCES Employees(id_employee) ON DELETE CASCADE
 );
 
-CREATE TABLE Appointments (
+CREATE TABLE Appointments ( -- Michelle
     id_appointment INT PRIMARY KEY AUTO_INCREMENT,
     date_appointment DATETIME NOT NULL,
     query_type VARCHAR(100) NOT NULL,
@@ -149,17 +134,16 @@ CREATE TABLE Appointments (
     id_employee INT,
     id_pet INT,
     status ENUM('Scheduled', 'In Progress', 'Completed', 'Cancelled'),
-    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner),
-    FOREIGN KEY (id_employee) REFERENCES Employees(id_employee),
-    FOREIGN KEY (id_pet) REFERENCES Pets(id_pet)
+    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner) ON DELETE CASCADE,
+    FOREIGN KEY (id_employee) REFERENCES Employees(id_employee) ON DELETE CASCADE,
+    FOREIGN KEY (id_pet) REFERENCES Pets(id_pet) ON DELETE CASCADE
 );
 
-CREATE TABLE Suppliers (
+CREATE TABLE Suppliers ( 
     id_supplier INT PRIMARY KEY AUTO_INCREMENT, 
     company_name VARCHAR(100) NOT NULL,
     contact VARCHAR(10) NOT NULL,
-    email VARCHAR(65) NOT NULL,
-    address TEXT
+    email VARCHAR(65) NOT NULL
 );
 
 CREATE TABLE PurchaseOrders (
@@ -168,10 +152,10 @@ CREATE TABLE PurchaseOrders (
     status ENUM('Delivered', 'Pending'),
     id_supplier INT,
     total_amount DECIMAL(10,2),
-    FOREIGN KEY (id_supplier) REFERENCES Suppliers(id_supplier)
+    FOREIGN KEY (id_supplier) REFERENCES Suppliers(id_supplier) ON DELETE CASCADE
 );
 
-CREATE TABLE PaymentMethod (
+CREATE TABLE PaymentMethod ( -- Michelle
     id_payment_method INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(65) NOT NULL,
     description TEXT
@@ -182,11 +166,11 @@ CREATE TABLE if not exists DetailsPurchaseOrder (
     id_pharmaceutical_product INT,
     id_purchase_order INT,
     amount INT NOT NULL,
-    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaCeuticalProduct(id_pharmaceutical_product),
-    FOREIGN KEY (id_purchase_order) REFERENCES PurchaseOrders(id_purchase_order)
+    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaCeuticalProduct(id_pharmaceutical_product) ON DELETE CASCADE,
+    FOREIGN KEY (id_purchase_order) REFERENCES PurchaseOrders(id_purchase_order) ON DELETE CASCADE
  );  
 
-CREATE TABLE Services (
+CREATE TABLE Services ( -- Michelle
     id_service INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(65) NOT NULL,
     date_service DATE NOT NULL,
@@ -203,9 +187,9 @@ CREATE TABLE Sales (
     id_owner INT,
     id_employee INT,
     id_appointment INT,
-    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner),
-    FOREIGN KEY (id_employee) REFERENCES Employees(id_employee),
-    FOREIGN KEY (id_appointment) REFERENCES Appointments(id_appointment)
+    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner) ON DELETE CASCADE,
+    FOREIGN KEY (id_employee) REFERENCES Employees(id_employee) ON DELETE CASCADE,
+    FOREIGN KEY (id_appointment) REFERENCES Appointments(id_appointment) ON DELETE CASCADE
 );
 
 CREATE TABLE ProductSalesDetails (
@@ -213,8 +197,8 @@ CREATE TABLE ProductSalesDetails (
     id_pharmaceutical_product INT,
     id_sale INT,
     amount INT NOT NULL,
-    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaCeuticalProduct(id_pharmaceutical_product),
-    FOREIGN KEY (id_sale) REFERENCES Sales(id_sale)
+    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaCeuticalProduct(id_pharmaceutical_product)ON DELETE CASCADE,
+    FOREIGN KEY (id_sale) REFERENCES Sales(id_sale) ON DELETE CASCADE
 );
 
 CREATE TABLE DetailsSalesServices (
@@ -222,8 +206,8 @@ CREATE TABLE DetailsSalesServices (
     id_service INT,
     id_sale INT,
     amount INT NOT NULL,
-    FOREIGN KEY (id_service) REFERENCES Services(id_service),
-    FOREIGN KEY (id_sale) REFERENCES Sales(id_sale)
+    FOREIGN KEY (id_service) REFERENCES Services(id_service) ON DELETE CASCADE,
+    FOREIGN KEY (id_sale) REFERENCES Sales(id_sale) ON DELETE CASCADE
 );
 
 CREATE TABLE ProcedureSalesDetails (
@@ -231,16 +215,16 @@ CREATE TABLE ProcedureSalesDetails (
     id_medical_procedure INT,
     id_sale INT,
     amount INT NOT NULL,
-    FOREIGN KEY (id_medical_procedure) REFERENCES MedicalProcedure(id_medical_procedure),
-    FOREIGN KEY (id_sale) REFERENCES Sales(id_sale)
+    FOREIGN KEY (id_medical_procedure) REFERENCES MedicalProcedure(id_medical_procedure) ON DELETE CASCADE,
+    FOREIGN KEY (id_sale) REFERENCES Sales(id_sale) ON DELETE CASCADE
 );
 
-CREATE TABLE Invoice (
+CREATE TABLE Invoice ( -- Michelle
     id_invoice INT PRIMARY KEY AUTO_INCREMENT,
     id_sale INT,
     date_invoice DATE NOT NULL,
     total DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (id_sale) REFERENCES Sales(id_sale)
+    FOREIGN KEY (id_sale) REFERENCES Sales(id_sale) ON DELETE CASCADE
 );
 
 CREATE TABLE Transactions (
@@ -252,9 +236,9 @@ CREATE TABLE Transactions (
     id_invoice INT,
     id_owner INT,
     notes TEXT,
-    FOREIGN KEY (id_payment_method) REFERENCES PaymentMethod(id_payment_method),
-    FOREIGN KEY (id_invoice) REFERENCES Invoice(id_invoice),
-    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner)
+    FOREIGN KEY (id_payment_method) REFERENCES PaymentMethod(id_payment_method)ON DELETE CASCADE,
+    FOREIGN KEY (id_invoice) REFERENCES Invoice(id_invoice) ON DELETE CASCADE,
+    FOREIGN KEY (id_owner) REFERENCES Owner(id_owner) ON DELETE CASCADE
 );
 
 CREATE TABLE SpecialActivities (
@@ -279,7 +263,7 @@ CREATE TABLE Expenses (
     amount DECIMAL(10,2),
     id_type_expense INT,
     description TEXT,
-    FOREIGN KEY (id_type_expense) REFERENCES TypeExpense(id_type_expense)
+    FOREIGN KEY (id_type_expense) REFERENCES TypeExpense(id_type_expense) ON DELETE CASCADE
 );
 
 CREATE TABLE MedicalSupplies (
@@ -287,7 +271,7 @@ CREATE TABLE MedicalSupplies (
     type VARCHAR(65) NOT NULL,
     supplies TEXT NOT NULL,
     id_pharmaceutical_product INT,
-    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaceuticalProduct(id_pharmaceutical_product)
+    FOREIGN KEY (id_pharmaceutical_product) REFERENCES PharmaceuticalProduct(id_pharmaceutical_product) ON DELETE CASCADE
 );
 
 CREATE TABLE ElectronicInvoice (
@@ -302,6 +286,6 @@ CREATE TABLE ElectronicInvoice (
     cufe VARCHAR(100) NOT NULL UNIQUE,
     qr_code BLOB, 
     digital_signature BLOB, 
-    FOREIGN KEY (customer_id) REFERENCES Owner(id_owner),
-    FOREIGN KEY (veterinarian_id) REFERENCES Employees(id_employee)
+    FOREIGN KEY (customer_id) REFERENCES Owner(id_owner) ON DELETE CASCADE,
+    FOREIGN KEY (veterinarian_id) REFERENCES Employees(id_employee) ON DELETE CASCADE
 );

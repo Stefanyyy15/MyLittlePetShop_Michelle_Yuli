@@ -2,25 +2,22 @@
 
 This project is a system that allows you to efficiently manage the operations of a veterinary clinic. The system is designed to manage information about pets, their owners, health history, inventory of medications and vaccines, scheduling of medical consultations and procedures, as well as billing and additional services.
 
-![Logo](lps-logo.png)
+![Logo](img/lps-logo.png)
 
 ## Table of Contents 
 
 | Index | Title |
 | ------ | --------------- |
-| 1. | [System Requirements] (#System Requirements) |
-| 2. | Installation |
-| 1. | [Project Description](#Project_Description) |
-| 2. | [Database Image](#Database_Image) |
-| 3. | [Database Structure](#Database_Structure) |
-| 4. | [Class Diagram Image of the Database](#Class_Diagram_Image_of_the_Database) |
-| 5. | [Requirements](#Requirements) |
-| 6. | [Technologies Used](#Technologies_Used) |
-| 6. | [Installation and Setup](#Installation_and_Setup) |
-| 10.| [Authors](#Authors) |
-| 6 | FAQs |
-| 7 | License |
-| 8 | Group |
+| 1. | Project Description |
+| 2. | System Requirements |
+| 3. | Installation |
+| 4. | Database Image|
+| 5. | Class Diagram |
+| 6. | Main Features|
+| 7. | Contributions|
+| 8. | FAQs |
+| 9. | License |
+| 10. | Contact |
 
 ## System Requirements
 
@@ -53,7 +50,11 @@ Go to file
 
 ## Database Image
 
-![DataModel](<img/Data Model1!Veterinaria_1.png>)
+![Database](img/Veterinaria.svg)
+
+## Class Diagrama
+
+- Aqui se supone q va
 
 ## Main Features
 
@@ -146,16 +147,6 @@ Go to file
 - **Edit Inventory Product:** Update details of an inventory product.
 
 - **Delete Inventory Product:** Remove products from the inventory.
-
-### Invoicing
-
-- **Register Invoice:** Create a new invoice.
-
-- **List Invoices:** View all generated invoices.
-
-- **Edit Invoice:** Update invoice details.
-
-- **Delete Invoice:** Cancel an invoice.
 
 ### Special Activities
 

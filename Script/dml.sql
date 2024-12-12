@@ -7,10 +7,7 @@ INSERT INTO Species (name, description) VALUES
 ('Hamster', 'Small rodent pet'),
 ('Rabbit', 'Domesticated rabbit'),
 ('Fish', 'Aquarium fish species'),
-('Turtle', 'Reptilian pet species'),
-('Guinea Pig', 'Small rodent companion'),
-('Ferret', 'Domesticated mustelid'),
-('Snake', 'Non-venomous pet snake');
+('Turtle', 'Reptilian pet species');
 
 INSERT INTO TypeSickness (name, description) VALUES
 ('Infectious', 'Diseases transmitted between animals'),
@@ -36,18 +33,6 @@ INSERT INTO Sickness (name, id_type_sickness, description) VALUES
 ('Dental Decay', 9, 'Tooth and gum deterioration'),
 ('Epilepsy', 10, 'Neurological seizure disorder');
 
-INSERT INTO Identity (name, photo) VALUES
-('Collar', NULL),
-('Tag', NULL),
-('Microchip', NULL),
-('Medical Record', NULL),
-('Vaccination Certificate', NULL),
-('Pedigree Document', NULL),
-('Adoption Papers', NULL),
-('Tracking Chip', NULL),
-('Medical Implant', NULL),
-('Tracking Device', NULL);
-
 INSERT INTO Employees (first_name, last_name, second_last_name, identity_type, identification_number, wage, position_type, hire_date, email, phone, shift) VALUES
 ('María', 'González', 'Perez', 'CC', '1085678901', 2500.00, 'Veterinarian', '2022-03-15', 'maria.gonzalez@petshop.com', '+573001234567', 'M'),
 ('Carlos', 'Rodríguez', 'Sanchez', 'CC', '1087654321', 2200.00, 'Assistant', '2022-06-01', 'carlos.rodriguez@petshop.com', '+573009876543', 'A'),
@@ -59,41 +44,29 @@ INSERT INTO Employees (first_name, last_name, second_last_name, identity_type, i
 ('Diego', 'Torres', 'Fernandez', 'CC', '1089012345', 2400.00, 'Admin', '2022-05-12', 'diego.torres@petshop.com', '+573004455667', 'A'),
 ('Camila', 'Herrera', 'Santacruz', 'CC', '1056789045', 2700.00, 'Veterinarian', '2022-01-25', 'camila.herrera@petshop.com', '+573005566778', 'M');
 
-INSERT INTO Owner (first_name, last_name, identity_type, identification_number, rut, phone, email, emergency_contact_name, emergency_contact_phone) VALUES
-('Ana', 'García', 'CC', '1045678901', '1045678901-7', '+573001234567', 'ana.garcia@email.com', 'Juan García', '+573009876543'),
-('Pedro', 'Morales', 'CC', '1087654321', '1087654321-4', '+573009876543', 'pedro.morales@email.com', 'María Morales', '+573001234567'),
-('Luisa', 'Fernández', 'CC', '1023456789', '1023456789-5', '+573002345678', 'luisa.fernandez@email.com', 'Carlos Fernández', '+573007654321'),
-('Roberto', 'Jiménez', 'CC', '1056789012', '1056789012-2', '+573007654321', 'roberto.jimenez@email.com', 'Sofía Jiménez', '+573003456789'),
-('Carolina', 'Navarro', 'CC', '1034567890', '1034567890-1', '+573003456789', 'carolina.navarro@email.com', 'Andrés Navarro', '+573006543210'),
-('Javier', 'Ruiz', 'CC', '1078901234', '1078901234-6', '+573006543210', 'javier.ruiz@email.com', 'Laura Ruiz', '+573001122334'),
-('Valentina', 'Mendoza', 'CC', '1045678902', '1045678902-7', '+573001122334', 'valentina.mendoza@email.com', 'Diego Mendoza', '+573004455667'),
-('Daniel', 'Castro', 'CC', '1089012345', '1089012345-8', '+573004455667', 'daniel.castro@email.com', 'Camila Castro', '+573005566778'),
-('Mariana', 'Silva', 'CC', '1056789013', '1056789013-9', '+573005566778', 'mariana.silva@email.com', 'Miguel Silva', '+573008899001'),
-('Gustavo', 'Ortiz', 'CC', '1023456790', '1023456790-1', '+573008899001', 'gustavo.ortiz@email.com', 'Ana Ortiz', '+573002345678');
+INSERT INTO Owner (first_name, last_name, identity_type, identification_number, rut, phone, email, address, emergency_contact_name, emergency_contact_phone) VALUES
+('Ana', 'García', 'CC', '1045678901', '1045678901-7', '+573001234567', 'ana.garcia@email.com', '72nd Street #10-15', 'Juan García', '+573009876543'),
+('Pedro', 'Morales', 'CC', '1087654321', '1087654321-4', '+573009876543', 'pedro.morales@email.com', '45th Avenue #20-30', 'María Morales', '+573001234567'),
+('Luisa', 'Fernández', 'CC', '1023456789', '1023456789-5', '+573002345678', 'luisa.fernandez@email.com', '23rd Avenue #65-89', 'Carlos Fernández', '+573007654321'),
+('Roberto', 'Jiménez', 'CC', '1056789012', '1056789012-2', '+573007654321', 'roberto.jimenez@email.com', '56th Street #45-67', 'Sofía Jiménez', '+573003456789'),
+('Carolina', 'Navarro', 'CC', '1034567890', '1034567890-1', '+573003456789', 'carolina.navarro@email.com', '78th Street #11-33', 'Andrés Navarro', '+573006543210'),
+('Javier', 'Ruiz', 'CC', '1078901234', '1078901234-6', '+573006543210', 'javier.ruiz@email.com', '89th Avenue #78-90', 'Laura Ruiz', '+573001122334'),
+('Valentina', 'Mendoza', 'CC', '1045678902', '1045678902-7', '+573001122334', 'valentina.mendoza@email.com', '34th Street #23-56', 'Diego Mendoza', '+573004455667'),
+('Daniel', 'Castro', 'CC', '1089012345', '1089012345-8', '+573004455667', 'daniel.castro@email.com', '12th Avenue #65-78', 'Camila Castro', '+573005566778'),
+('Mariana', 'Silva', 'CC', '1056789013', '1056789013-9', '+573005566778', 'mariana.silva@email.com', '34th Street #34-56', 'Miguel Silva', '+573008899001'),
+('Gustavo', 'Ortiz', 'CC', '1023456790', '1023456790-1', '+573008899001', 'gustavo.ortiz@email.com', '50th Avenue #20-40', 'Ana Ortiz', '+573002345678');
 
-INSERT INTO Address (id_owner, type_via, address, indications) VALUES
-(1, 'Street', '72nd Street #10-15', 'White house with a green door'),
-(2, 'Avenue', '45th Avenue #23-30', 'Blue building, apartment 302'),
-(3, 'Diagonal', '65th Diagonal #12-45', 'Torres del Parque residential complex'),
-(4, 'Street', '100th Street #15-20', 'Corner house, black gate'),
-(5, 'Transversal', '80th Transversal #25-35', 'Yellow building, third floor'),
-(6, 'Avenue', '15th Avenue #50-60', 'House with a large garden'),
-(7, 'Circle', '30th Circle #40-50', 'Gated community, house number 7'),
-(8, 'Street', '55th Street #20-25', 'House with a brown gate'),
-(9, 'Avenue', '70th Avenue #30-40', 'Modern building, apartment 504'),
-(10, 'Diagonal', '90th Diagonal #15-30', 'House with a terrace');
-
-INSERT INTO PharmaceuticalProduct (name, description, price, stock_quantity, expiration_date, manufacturer, product_type) VALUES
-('Amoxicillin', 'Broad-spectrum antibiotic', 25.50, 100, '2025-06-30', 'Pharma Plus', 'Medicine'),
-('Canine Quintuple Vaccine', 'Vaccine for dogs', 45.00, 50, '2024-12-31', 'VetCare', 'Vaccine'),
-('Dewormer', 'Antiparasitic for pets', 15.75, 200, '2025-03-15', 'PetHealth', 'Medicine'),
-('Veterinary Ibuprofen', 'Anti-inflammatory', 20.25, 75, '2024-09-30', 'MediVet', 'Medicine'),
-('Feline Triple Vaccine', 'Vaccine for cats', 38.50, 60, '2024-11-15', 'FelineProtect', 'Vaccine'),
-('Adhesive Bandages', 'Medical supply for pets', 5.99, 150, '2026-01-20', 'VetSupplies', 'Supply'),
-('Disposable Syringe', 'Sterile syringe', 2.50, 500, '2025-07-10', 'MedEq', 'Supply'),
-('Antiparasitic Pipettes', 'Flea and tick control', 18.75, 100, '2024-10-25', 'PetGuard', 'Medicine'),
-('Saline Solution', 'Wound cleaning', 7.25, 200, '2025-05-15', 'CleanCare', 'Supply'),
-('Rabies Vaccine', 'Vaccine against rabies', 30.00, 80, '2024-08-30', 'RabieStop', 'Vaccine');
+INSERT INTO PharmaceuticalProduct (name, description, price, stock_quantity, expiration_date, manufacturer) VALUES
+('Amoxicillin', 'Broad-spectrum antibiotic', 25.50, 100, '2025-06-30', 'Pharma Plus'),
+('Canine Quintuple Vaccine', 'Vaccine for dogs', 45.00, 50, '2024-12-31', 'VetCare'),
+('Dewormer', 'Antiparasitic for pets', 15.75, 200, '2025-03-15', 'PetHealth'),
+('Veterinary Ibuprofen', 'Anti-inflammatory', 20.25, 75, '2024-09-30', 'MediVet'),
+('Feline Triple Vaccine', 'Vaccine for cats', 38.50, 60, '2024-11-15', 'FelineProtect'),
+('Adhesive Bandages', 'Medical supply for pets', 5.99, 150, '2026-01-20', 'VetSupplies'),
+('Disposable Syringe', 'Sterile syringe', 2.50, 500, '2025-07-10', 'MedEq'),
+('Antiparasitic Pipettes', 'Flea and tick control', 18.75, 100, '2024-10-25', 'PetGuard'),
+('Saline Solution', 'Wound cleaning', 7.25, 200, '2025-05-15', 'CleanCare'),
+('Rabies Vaccine', 'Vaccine against rabies', 30.00, 80, '2024-08-30', 'RabieStop');
 
 INSERT INTO Medicines (type, manufacturer, due_date, id_pharmaceutical_product, dosage) VALUES
 ('Antibiotic', 'Pharma Plus', '2025-06-30', 1, '1 ml per 10 kg of weight, every 12 hours'),
@@ -119,17 +92,17 @@ INSERT INTO Vaccines (name, type, date_entry, due_date, id_pharmaceutical_produc
 ('Neutering', 'Hormonal Control', '2024-09-14', '2025-03-15', 7, 3, 'BATCH-BIRD-001'),
 ('West Nile', 'Viral Preventive', '2024-10-25', '2024-12-15', 9, 6, 'BATCH-FISH-001');
 
-INSERT INTO Pets (name, id_species, breed, date_birth, gender, weight, height, microchip_number, dryfood, numberTimes, allergies, chronic_conditions, last_veterinary_visit, id_owner, id_identity, id_sickness) VALUES
-('Luna', 1, 'Labrador Retriever', '2020-05-15', 'Female', 25.5, 55.0, 'CHIP-001', 'Pedigree', 3, 'Pollen', NULL, '2024-01-10 10:30:00', 1, 1, 1),
-('Milo', 2, 'Siamese', '2021-03-22', 'Male', 4.2, 25.0, 'CHIP-002', 'Whiskas', 2, 'Fish', 'Feline asthma', '2024-02-15 14:45:00', 2, 2, 5),
-('Oreo', 5, 'Holland Lop', '2022-07-10', 'Male', 2.0, 30.0, 'CHIP-003', 'Hay', 2, NULL, NULL, '2024-03-20 11:15:00', 3, 3, 6),
-('Rocky', 1, 'German Shepherd', '2019-11-05', 'Male', 35.0, 65.0, 'CHIP-004', 'Dog Chow', 4, 'Latex', 'Hip dysplasia', '2024-04-05 09:00:00', 4, 4, 3),
-('Whiskers', 2, 'Persian', '2022-01-30', 'Female', 3.8, 20.0, 'CHIP-005', 'Don Cat', 3, 'Feathers', NULL, '2024-05-12 16:20:00', 5, 5, 2),
-('Pepper', 4, 'Syrian', '2023-02-14', 'Female', 0.1, 10.0, 'CHIP-006', 'Seeds', 2, NULL, NULL, '2024-06-18 13:40:00', 6, 6, 7),
-('Max', 1, 'Golden Retriever', '2020-09-20', 'Male', 30.0, 60.0, 'CHIP-007', 'Ringo', 3, 'Grass', 'Seasonal allergies', '2024-07-22 10:10:00', 7, 7, 4),
-('Nala', 6, 'Betta', '2022-06-05', 'Female', 0.05, 5.0, 'CHIP-008', 'BettaPallets', 1, NULL, NULL, '2024-08-07 15:30:00', 8, 8, 8),
-('Sonic', 3, 'Canary', '2021-12-12', 'Male', 0.2, 20.0, 'CHIP-009', 'VitalKraft', 2, 'Seeds', NULL, '2024-09-14 11:50:00', 9, 9, 9),
-('Rex', 7, 'Red-Eared Slider', '2019-08-25', 'Male', 0.5, 15.0, 'CHIP-010', 'ReptoMin', 2, NULL, 'Shell problems', '2024-10-25 14:00:00', 10, 10, 10);
+INSERT INTO Pets (name, id_species, breed, date_birth, gender, weight, height, microchip_number, tatto, dryfood, numberTimes, allergies, chronic_conditions, last_veterinary_visit, adoption_status, id_owner, id_sickness) VALUES
+('Luna', 1, 'Labrador Retriever', '2020-05-15', 'Female', 25.5, 55.0, 'CHIP-001', TRUE, 'Pedigree', 3, 'Pollen', NULL, '2024-01-10 10:30:00', NULL, 1, 1),
+('Milo', 2, 'Siamese', '2021-03-22', 'Male', 4.2, 25.0, 'CHIP-002', FALSE, 'Whiskas', 2, 'Fish', 'Feline asthma', '2024-02-15 14:45:00', NULL, 2, 2),
+('Oreo', 5, 'Holland Lop', '2022-07-10', 'Male', 2.0, 30.0, 'CHIP-003', TRUE, 'Hay', 2, NULL, NULL, '2024-03-20 11:15:00', NULL, 3, 3),
+('Rocky', 1, 'German Shepherd', '2019-11-05', 'Male', 35.0, 65.0, 'CHIP-004', FALSE, 'Dog Chow', 4, 'Latex', 'Hip dysplasia', '2024-04-05 09:00:00', NULL, 4, 4),
+('Whiskers', 2, 'Persian', '2022-01-30', 'Female', 3.8, 20.0, 'CHIP-005', TRUE, 'Don Cat', 3, 'Feathers', NULL, '2024-05-12 16:20:00', NULL, 5, 5),
+('Pepper', 4, 'Syrian', '2023-02-14', 'Female', 0.1, 10.0, 'CHIP-006', FALSE, 'Seeds', 2, NULL, NULL, '2024-06-18 13:40:00', NULL, 6, 6),
+('Max', 1, 'Golden Retriever', '2020-09-20', 'Male', 30.0, 60.0, 'CHIP-007', TRUE, 'Ringo', 3, 'Grass', 'Seasonal allergies', '2024-07-22 10:10:00', NULL, 7, 7),
+('Nala', 6, 'Betta', '2022-06-05', 'Female', 0.05, 5.0, 'CHIP-008', FALSE, 'BettaPallets', 1, NULL, NULL, '2024-08-07 15:30:00', NULL, 8, 8),
+('Sonic', 3, 'Canary', '2021-12-12', 'Male', 0.2, 20.0, 'CHIP-009', TRUE, 'VitalKraft', 2, 'Seeds', NULL, '2024-09-14 11:50:00', NULL, 9, 9),
+('Rex', 7, 'Red-Eared Slider', '2019-08-25', 'Male', 0.5, 15.0, 'CHIP-010', FALSE, 'ReptoMin', 2, NULL, 'Shell problems', '2024-10-25 14:00:00', NULL, 10, 10);
 
 INSERT INTO MedicalProcedure (name, used_inputs, type_surgery, exam_analysis, date_procedure, price, id_pet, id_employee) VALUES
 ('Hip Surgery', 'Anesthesia, Scalpel, Bandages', 'Surgery', false, '2024-01-15 10:00:00', 500.00, 4, 1),
@@ -155,17 +128,17 @@ INSERT INTO Appointments (date_appointment, query_type, diagnostic, treatment, r
 ('2024-09-14 11:50:00', 'Examination', 'Injury recovery', 'Wound care', 'Wound Examination', 'Daily bandage change', 6, 9, 'Completed'),
 ('2024-10-25 14:00:00', 'Monitoring', 'Condition tracking', 'Observation', 'Specialized Monitoring', 'Semi-annual monitoring', 4, 10, 'Completed');
 
-INSERT INTO Suppliers (company_name, contact, email, address) VALUES
-('PetCare Supplies', '3001234567', 'sales@petcaresupplies.com', '72nd Street #10-15, Bogotá'),
-('Veterinary Solutions', '3009876543', 'contact@veterinarysolutions.com', '45th Avenue #23-30, Medellín'),
-('Animal Health Distributors', '3002345678', 'info@animalhealthdist.com', '65th Diagonal #12-45, Cali'),
-('Pet Nutrition Inc', '3007654321', 'sales@petnutrition.com', '100th Street #15-20, Barranquilla'),
-('Veterinary Equipment Pro', '3003456789', 'contact@vetequippro.com', '80th Transversal #25-35, Cartagena'),
-('Pet Pharma Solutions', '3006543210', 'info@petpharmasolutions.com', '15th Avenue #50-60, Pereira'),
-('Animal Care Supplies', '3001122334', 'sales@animalcaresupplies.com', '30th Circular #40-50, Ibagué'),
-('Vet Clinic Distributors', '3004455667', 'contact@vetclinicdist.com', '55th Street #20-25, Manizales'),
-('Pet Medical Supplies', '3005566778', 'info@petmedicalsupplies.com', '70th Avenue #30-40, Armenia'),
-('Veterinary Wellness Co', '3008899001', 'sales@veterwellness.com', '90th Diagonal #15-30, Bucaramanga');
+INSERT INTO Suppliers (company_name, contact, email) VALUES
+('PetCare Supplies', '3001234567', 'sales@petcaresupplies.com'),
+('Veterinary Solutions', '3009876543', 'contact@veterinarysolutions.com'),
+('Animal Health Distributors', '3002345678', 'info@animalhealthdist.com'),
+('Pet Nutrition Inc', '3007654321', 'sales@petnutrition.com'),
+('Veterinary Equipment Pro', '3003456789', 'contact@vetequippro.com'),
+('Pet Pharma Solutions', '3006543210', 'info@petpharmasolutions.com'),
+('Animal Care Supplies', '3001122334', 'sales@animalcaresupplies.com'),
+('Vet Clinic Distributors', '3004455667', 'contact@vetclinicdist.com'),
+('Pet Medical Supplies', '3005566778', 'info@petmedicalsupplies.com'),
+('Veterinary Wellness Co', '3008899001', 'sales@veterwellness.com');
 
 INSERT INTO PurchaseOrders (purchase_date, status, id_supplier, total_amount) VALUES
 ('2024-01-15 10:00:00', 'Delivered', 1, 5000.50),

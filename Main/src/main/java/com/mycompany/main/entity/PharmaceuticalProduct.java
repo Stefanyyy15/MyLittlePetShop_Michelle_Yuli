@@ -5,6 +5,7 @@ import com.mycompany.main.persistence.ConnectionDB;
 import java.util.Date;
 import java.sql.*;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class PharmaceuticalProduct {
 
@@ -28,13 +29,12 @@ public class PharmaceuticalProduct {
         this.product_type = product_type;
     }
 
-    public PharmaceuticalProduct(int id, String name, String description, double price) {
-        this.id_pharmaceutical_product = id;
+    public PharmaceuticalProduct(int id_pharmaceutical_product, String name, String description, double price) {
+        this.id_pharmaceutical_product = id_pharmaceutical_product;
         this.name = name;
         this.description = description;
         this.price = price;
     }
-
     
 
     public int getId_pharmaceutical_product() {
@@ -101,154 +101,229 @@ public class PharmaceuticalProduct {
         this.product_type = product_type;
     }
 
-    // Listar todos los productos farmacéuticos
-    public static void listPharmaceuticalProducts() {
-        System.out.println("---- List of Pharmaceutical Products ----");
-        try (Connection conn = ConnectionDB.getConnection()) {
-            String query = "SELECT * FROM PharmaceuticalProduct";
-            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
-                while (rs.next()) {
-                    int id = rs.getInt("id_pharmaceutical_product");
-                    String name = rs.getString("name");
-                    String description = rs.getString("description");
-                    double price = rs.getDouble("price");
-                    int stock = rs.getInt("stock_quantity");
-                    Date expiration = rs.getDate("expiration_date");
-                    String manufacturer = rs.getString("manufacturer");
-                    String productType = rs.getString("product_type");
+    public class PharmaceuticalProductCRUD {
 
-                    System.out.printf("ID: %d, Name: %s, Description: %s, Price: %.2f, Stock: %d, Expiration: %s, Manufacturer: %s, Type: %s\n",
-                            id, name, description, price, stock, expiration, manufacturer, productType);
+        private static final Scanner scanner = new Scanner(System.in);
+
+        public static void listPharmaceuticalProducts() {
+            System.out.println("---- List of Pharmaceutical Products ----");
+            try (Connection conn = ConnectionDB.getConnection()) {
+                String query = "SELECT * FROM PharmaceuticalProduct";
+                try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+                    while (rs.next()) {
+                        int id = rs.getInt("id_pharmaceutical_product");
+                        String name = rs.getString("name");
+                        String description = rs.getString("description");
+                        double price = rs.getDouble("price");
+                        int stock = rs.getInt("stock_quantity");
+                        Date expiration = rs.getDate("expiration_date");
+                        String manufacturer = rs.getString("manufacturer");
+                        String productType = rs.getString("product_type");
+
+                        System.out.printf("ID: %d, Name: %s, Description: %s, Price: %.2f, Stock: %d, Expiration: %s, Manufacturer: %s, Type: %s\n",
+                                id, name, description, price, stock, expiration, manufacturer, productType);
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println("Error retrieving pharmaceutical products: " + e.getMessage());
+            }
+        }
+
+        public static void registerPharmaceuticalProduct() {
+            System.out.println("---- Register Pharmaceutical Product ----");
+
+            String name = inputWithValidation(scanner,
+                    "Enter Product Name: ",
+                    "[A-Za-z0-9 ]+",
+                    "Invalid name. Only letters, numbers, and spaces allowed.");
+
+            String description = inputOptional(scanner, "Enter Description: ");
+
+            double price = inputDoubleWithValidation(scanner,
+                    "Enter Price: ",
+                    "Invalid price. Please enter a positive number.");
+
+            int stockQuantity = inputIntWithValidation(scanner,
+                    "Enter Stock Quantity: ",
+                    "Invalid stock quantity. Please enter a non-negative number.");
+
+            String expirationDate = inputWithValidation(scanner,
+                    "Enter Expiration Date (YYYY-MM-DD): ",
+                    "\\d{4}-\\d{2}-\\d{2}",
+                    "Invalid date format. Use YYYY-MM-DD.");
+
+            String manufacturer = inputWithValidation(scanner,
+                    "Enter Manufacturer: ",
+                    "[A-Za-z0-9 ]+",
+                    "Invalid manufacturer name. Only letters, numbers, and spaces allowed.");
+
+            String productType = inputWithValidation(scanner,
+                    "Enter Product Type (Medicine, Vaccine, Supply): ",
+                    "Medicine|Vaccine|Supply",
+                    "Invalid product type. Choose from: Medicine, Vaccine, Supply.");
+
+            try (Connection conn = ConnectionDB.getConnection()) {
+                String query = "INSERT INTO PharmaceuticalProduct (name, description, price, stock_quantity, expiration_date, manufacturer, product_type) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                    stmt.setString(1, name);
+                    stmt.setString(2, description);
+                    stmt.setDouble(3, price);
+                    stmt.setInt(4, stockQuantity);
+                    stmt.setString(5, expirationDate);
+                    stmt.setString(6, manufacturer);
+                    stmt.setString(7, productType);
+
+                    int rowsInserted = stmt.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("Pharmaceutical Product registered successfully.");
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println("Error saving the pharmaceutical product: " + e.getMessage());
+            }
+        }
+
+        public static void editPharmaceuticalProduct() {
+            System.out.println("---- Edit Pharmaceutical Product ----");
+            listPharmaceuticalProducts();
+            int productId = inputInt(scanner, "Enter Product ID to edit: ");
+
+            String name = inputWithValidation(scanner,
+                    "Enter new Product Name: ",
+                    "[A-Za-z0-9 ]+",
+                    "Invalid name. Only letters, numbers, and spaces allowed.");
+
+            String description = inputOptional(scanner, "Enter new Description: ");
+
+            double price = inputDoubleWithValidation(scanner,
+                    "Enter new Price: ",
+                    "Invalid price. Please enter a positive number.");
+
+            int stockQuantity = inputIntWithValidation(scanner,
+                    "Enter new Stock Quantity: ",
+                    "Invalid stock quantity. Please enter a non-negative number.");
+
+            String expirationDate = inputWithValidation(scanner,
+                    "Enter new Expiration Date (YYYY-MM-DD): ",
+                    "\\d{4}-\\d{2}-\\d{2}",
+                    "Invalid date format. Use YYYY-MM-DD.");
+
+            String manufacturer = inputWithValidation(scanner,
+                    "Enter new Manufacturer: ",
+                    "[A-Za-z0-9 ]+",
+                    "Invalid manufacturer name. Only letters, numbers, and spaces allowed.");
+
+            String productType = inputWithValidation(scanner,
+                    "Enter new Product Type (Medicine, Vaccine, Supply): ",
+                    "Medicine|Vaccine|Supply",
+                    "Invalid product type. Choose from: Medicine, Vaccine, Supply.");
+
+            try (Connection conn = ConnectionDB.getConnection()) {
+                String query = "UPDATE PharmaceuticalProduct SET name = ?, description = ?, price = ?, stock_quantity = ?, "
+                        + "expiration_date = ?, manufacturer = ?, product_type = ? WHERE id_pharmaceutical_product = ?";
+                try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                    stmt.setString(1, name);
+                    stmt.setString(2, description);
+                    stmt.setDouble(3, price);
+                    stmt.setInt(4, stockQuantity);
+                    stmt.setString(5, expirationDate);
+                    stmt.setString(6, manufacturer);
+                    stmt.setString(7, productType);
+                    stmt.setInt(8, productId);
+
+                    int rowsAffected = stmt.executeUpdate();
+                    if (rowsAffected > 0) {
+                        System.out.println("Pharmaceutical Product updated successfully.");
+                    } else {
+                        System.out.println("Pharmaceutical Product not found.");
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println("Error updating pharmaceutical product: " + e.getMessage());
+            }
+        }
+
+        public static void deletePharmaceuticalProduct() {
+            System.out.println("---- Delete Pharmaceutical Product ----");
+
+            int productId = inputInt(scanner, "Enter Product ID to delete: ");
+
+            try (Connection conn = ConnectionDB.getConnection()) {
+                String query = "DELETE FROM PharmaceuticalProduct WHERE id_pharmaceutical_product = ?";
+                try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                    stmt.setInt(1, productId);
+
+                    int rowsAffected = stmt.executeUpdate();
+                    if (rowsAffected > 0) {
+                        System.out.println("Pharmaceutical Product deleted successfully.");
+                    } else {
+                        System.out.println("Pharmaceutical Product not found.");
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println("Error deleting pharmaceutical product: " + e.getMessage());
+            }
+        }
+
+        // Utility methods for input validation and handling
+        private static String inputWithValidation(Scanner scanner, String prompt, String regex, String errorMessage) {
+            String input;
+            while (true) {
+                System.out.print(prompt);
+                input = scanner.nextLine().trim();
+                if (Pattern.matches(regex, input)) {
+                    break;
+                }
+                System.out.println(errorMessage);
+            }
+            return input;
+        }
+
+        private static String inputOptional(Scanner scanner, String prompt) {
+            System.out.print(prompt);
+            return scanner.nextLine().trim();
+        }
+
+        private static int inputInt(Scanner scanner, String prompt) {
+            while (true) {
+                try {
+                    System.out.print(prompt);
+                    return Integer.parseInt(scanner.nextLine().trim());
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid number. Please try again.");
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-    }
 
-    // Registrar un nuevo producto farmacéutico
-    public static void registerPharmaceuticalProduct() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("---- Register Pharmaceutical Product ----");
-
-        System.out.print("Enter Product Name: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Enter Description: ");
-        String description = scanner.nextLine();
-
-        System.out.print("Enter Price: ");
-        double price = scanner.nextDouble();
-
-        System.out.print("Enter Stock Quantity: ");
-        int stockQuantity = scanner.nextInt();
-
-        scanner.nextLine(); // Consumir salto de línea
-        System.out.print("Enter Expiration Date (YYYY-MM-DD): ");
-        String expirationDate = scanner.nextLine();
-
-        System.out.print("Enter Manufacturer: ");
-        String manufacturer = scanner.nextLine();
-
-        System.out.print("Enter Product Type (Medicine, Supply): ");
-        String productType = scanner.nextLine();
-
-        try (Connection conn = ConnectionDB.getConnection()) {
-            String query = "INSERT INTO PharmaceuticalProduct (name, description, price, stock_quantity, expiration_date, manufacturer, product_type) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, name);
-                stmt.setString(2, description);
-                stmt.setDouble(3, price);
-                stmt.setInt(4, stockQuantity);
-                stmt.setString(5, expirationDate);
-                stmt.setString(6, manufacturer);
-                stmt.setString(7, productType);
-
-                stmt.executeUpdate();
-                System.out.println("Pharmaceutical Product registered successfully.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error saving the pharmaceutical product: " + e.getMessage());
-        }
-    }
-
-    // Actualizar un producto farmacéutico
-    public static void editPharmaceuticalProduct() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("---- Edit Pharmaceutical Product ----");
-        System.out.print("Enter Product ID to edit: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Consumir salto de línea
-
-        System.out.print("Enter new Product Name: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Enter new Description: ");
-        String description = scanner.nextLine();
-
-        System.out.print("Enter new Price: ");
-        double price = scanner.nextDouble();
-
-        System.out.print("Enter new Stock Quantity: ");
-        int stockQuantity = scanner.nextInt();
-
-        scanner.nextLine(); // Consumir salto de línea
-        System.out.print("Enter new Expiration Date (YYYY-MM-DD): ");
-        String expirationDate = scanner.nextLine();
-
-        System.out.print("Enter new Manufacturer: ");
-        String manufacturer = scanner.nextLine();
-
-        System.out.print("Enter new Product Type (Medicine, Vaccine, Supply): ");
-        String productType = scanner.nextLine();
-
-        try (Connection conn = ConnectionDB.getConnection()) {
-            String query = "UPDATE PharmaceuticalProduct SET name = ?, description = ?, price = ?, stock_quantity = ?, "
-                    + "expiration_date = ?, manufacturer = ?, product_type = ? WHERE id_pharmaceutical_product = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, name);
-                stmt.setString(2, description);
-                stmt.setDouble(3, price);
-                stmt.setInt(4, stockQuantity);
-                stmt.setString(5, expirationDate);
-                stmt.setString(6, manufacturer);
-                stmt.setString(7, productType);
-                stmt.setInt(8, id);
-
-                int rowsAffected = stmt.executeUpdate();
-                if (rowsAffected > 0) {
-                    System.out.println("Pharmaceutical Product updated successfully.");
-                } else {
-                    System.out.println("Pharmaceutical Product not found.");
+        private static int inputIntWithValidation(Scanner scanner, String prompt, String errorMessage) {
+            while (true) {
+                try {
+                    System.out.print(prompt);
+                    int value = Integer.parseInt(scanner.nextLine().trim());
+                    if (value >= 0) {
+                        return value;
+                    }
+                    System.out.println(errorMessage);
+                } catch (NumberFormatException e) {
+                    System.out.println(errorMessage);
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-    }
 
-    // Eliminar un producto farmacéutico
-    public static void deletePharmaceuticalProduct() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("---- Delete Pharmaceutical Product ----");
-        System.out.print("Enter Product ID to delete: ");
-        int id = scanner.nextInt();
-
-        try (Connection conn = ConnectionDB.getConnection()) {
-            String query = "DELETE FROM PharmaceuticalProduct WHERE id_pharmaceutical_product = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setInt(1, id);
-
-                int rowsAffected = stmt.executeUpdate();
-                if (rowsAffected > 0) {
-                    System.out.println("Pharmaceutical Product deleted successfully.");
-                } else {
-                    System.out.println("Pharmaceutical Product not found.");
+        private static double inputDoubleWithValidation(Scanner scanner, String prompt, String errorMessage) {
+            while (true) {
+                try {
+                    System.out.print(prompt);
+                    double value = Double.parseDouble(scanner.nextLine().trim());
+                    if (value >= 0) {
+                        return value;
+                    }
+                    System.out.println(errorMessage);
+                } catch (NumberFormatException e) {
+                    System.out.println(errorMessage);
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 }

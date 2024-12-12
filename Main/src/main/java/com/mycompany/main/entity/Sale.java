@@ -97,29 +97,44 @@ public class Sale {
     String dateStr = inputWithValidation(scanner, "Enter Sale Date (YYYY-MM-DD): ", "\\d{4}-\\d{2}-\\d{2}", "Invalid date format. Use YYYY-MM-DD.");
     String total = inputWithValidation(scanner, "Enter Total Amount: ", "\\d+(\\.\\d{1,2})?", "Invalid amount. Only numbers with up to 2 decimal places.");
 
-    String ownerId = null;
+    // Búsqueda y validación del propietario por número de identificación
+    String ownerIdentification = null;
+    int ownerId = -1;
     boolean ownerValid = false;
     while (!ownerValid) {
-        ownerId = inputWithValidation(scanner, "Enter Owner ID: ", "\\d+", "Invalid ID. Only numbers are allowed.");
-        if (OwnerCRUD.searchOwnerByIdentification(ownerId)) {  // Assuming this method returns true if the ID exists
-            ownerValid = true;
+        System.out.println("\nBuscar propietario por número de identificación");
+        ownerIdentification = inputWithValidation(scanner, "Enter Owner Identification Number: ", "\\d+", "Invalid identification number. Only numbers are allowed.");
+        if (OwnerCRUD.searchOwnerByIdentification(ownerIdentification)) {
+            ownerId = getOwnerIdByIdentification(ownerIdentification);
+            if (ownerId != -1) {
+                ownerValid = true;
+            } else {
+                System.out.println("Error getting owner ID. Please try again.");
+            }
         } else {
-            System.out.println("Owner ID not found. Please try again.");
+            System.out.println("Owner not found. Please try again.");
         }
     }
 
-    String employeeId = null;
+    // Búsqueda y validación del empleado por número de identificación
+    String employeeIdentification = null;
+    int employeeId = -1;
     boolean employeeValid = false;
     while (!employeeValid) {
-        employeeId = inputWithValidation(scanner, "Enter Employee ID: ", "\\d+", "Invalid ID. Only numbers are allowed.");
-        if (searchEmployeeByIdentification(employeeId)) {  // Assuming this method returns true if the ID exists
-            employeeValid = true;
+        System.out.println("\nBuscar empleado por número de identificación");
+        employeeIdentification = inputWithValidation(scanner, "Enter Employee Identification Number: ", "\\d+", "Invalid identification number. Only numbers are allowed.");
+        if (searchEmployeeByIdentification(employeeIdentification)) {
+            employeeId = getEmployeeIdByIdentification(employeeIdentification);
+            if (employeeId != -1) {
+                employeeValid = true;
+            } else {
+                System.out.println("Error getting employee ID. Please try again.");
+            }
         } else {
-            System.out.println("Employee ID not found. Please try again.");
+            System.out.println("Employee not found. Please try again.");
         }
     }
 
-    // Validating Appointment ID
     AppointmentManagement.listAppointments();
     String appointmentId = inputWithValidation(scanner, "Enter Appointment ID: ", "\\d+", "Invalid ID. Only numbers are allowed.");
 
@@ -129,8 +144,8 @@ public class Sale {
             stmt.setString(1, name);
             stmt.setDate(2, java.sql.Date.valueOf(dateStr));
             stmt.setDouble(3, Double.parseDouble(total));
-            stmt.setInt(4, Integer.parseInt(ownerId));
-            stmt.setInt(5, Integer.parseInt(employeeId));
+            stmt.setInt(4, ownerId);
+            stmt.setInt(5, employeeId);
             stmt.setInt(6, Integer.parseInt(appointmentId));
 
             int rowsInserted = stmt.executeUpdate();
@@ -144,6 +159,41 @@ public class Sale {
         }
     } catch (SQLException e) {
         System.out.println("Error registering sale: " + e.getMessage());
+    }
+    return -1;
+}
+
+// Método auxiliar para obtener el id_owner basado en el número de identificación
+public static int getOwnerIdByIdentification(String identificationNumber) {
+    try (Connection conn = ConnectionDB.getConnection()) {
+        String query = "SELECT id_owner FROM Owner WHERE identification_number = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, identificationNumber);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id_owner");
+                }
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error getting owner ID: " + e.getMessage());
+    }
+    return -1;
+}
+
+public static int getEmployeeIdByIdentification(String identificationNumber) {
+    try (Connection conn = ConnectionDB.getConnection()) {
+        String query = "SELECT id_employee FROM Employees WHERE identification_number = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, identificationNumber);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id_employee");
+                }
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error getting employee ID: " + e.getMessage());
     }
     return -1;
 }

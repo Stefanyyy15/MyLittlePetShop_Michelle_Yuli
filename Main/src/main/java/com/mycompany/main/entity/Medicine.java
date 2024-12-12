@@ -1,14 +1,9 @@
 
 package com.mycompany.main.entity;
-
 import com.mycompany.main.enums.Type;
 import com.mycompany.main.persistence.ConnectionDB;
 import static com.mycompany.main.persistence.ConnectionDB.getConnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Date;
 import java.util.Scanner;
 

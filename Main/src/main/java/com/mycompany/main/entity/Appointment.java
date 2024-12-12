@@ -2,6 +2,7 @@
 package com.mycompany.main.entity;
 
 import com.mycompany.main.entity.Owner.OwnerCRUD;
+import static com.mycompany.main.entity.Sale.searchEmployeeByIdentification;
 import com.mycompany.main.enums.StatusAppoinment;
 import com.mycompany.main.persistence.ConnectionDB;
 import java.sql.Connection;
@@ -153,12 +154,43 @@ public class Appointment {
 
     public static void registerAppointment() {
         System.out.println("---- Register New Appointment ----");
-        
-        //OwnerCRUD.searchOwnerByIdentification();
-        int ownerId = inputInt(scanner, "Enter Owner ID: ");
-        
-        //Sale.searchEmployeeByIdentification();
-        int employeeId = inputInt(scanner, "Enter Employee ID: ");
+
+    String ownerIdentification = null;
+    int ownerId = -1;
+    boolean ownerValid = false;
+    while (!ownerValid) {
+        System.out.println("\nBuscar propietario por número de identificación");
+        ownerIdentification = inputWithValidation(scanner, "Enter Owner Identification Number: ", "\\d+", "Invalid identification number. Only numbers are allowed.");
+        if (OwnerCRUD.searchOwnerByIdentification(ownerIdentification)) {
+            ownerId = Sale.getOwnerIdByIdentification(ownerIdentification);
+            if (ownerId != -1) {
+                ownerValid = true;
+            } else {
+                System.out.println("Error getting owner ID. Please try again.");
+            }
+        } else {
+            System.out.println("Owner not found. Please try again.");
+        }
+    }
+
+    // Búsqueda y validación del empleado por número de identificación
+    String employeeIdentification = null;
+    int employeeId = -1;
+    boolean employeeValid = false;
+    while (!employeeValid) {
+        System.out.println("\nBuscar empleado por número de identificación");
+        employeeIdentification = inputWithValidation(scanner, "Enter Employee Identification Number: ", "\\d+", "Invalid identification number. Only numbers are allowed.");
+        if (searchEmployeeByIdentification(employeeIdentification)) {
+            employeeId = Sale.getEmployeeIdByIdentification(employeeIdentification);
+            if (employeeId != -1) {
+                employeeValid = true;
+            } else {
+                System.out.println("Error getting employee ID. Please try again.");
+            }
+        } else {
+            System.out.println("Employee not found. Please try again.");
+        }
+    }
         
         Pet.listPets();
         int petId = inputInt(scanner, "Enter Pet ID: ");

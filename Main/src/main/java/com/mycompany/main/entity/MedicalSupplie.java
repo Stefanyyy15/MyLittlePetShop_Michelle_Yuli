@@ -1,5 +1,6 @@
 package com.mycompany.main.entity;
 
+import com.mycompany.main.entity.PharmaceuticalProduct.PharmaceuticalProductCRUD;
 import java.sql.*;
 import java.util.Scanner;
 import java.util.regex.Pattern;

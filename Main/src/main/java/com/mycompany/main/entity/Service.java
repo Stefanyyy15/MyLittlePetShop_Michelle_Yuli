@@ -5,8 +5,10 @@ import java.util.Date;
 import com.mycompany.main.persistence.ConnectionDB;
 import java.sql.*;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Service {
+
     private int id_service;
     private String name;
     private Date date_service;
@@ -16,13 +18,13 @@ public class Service {
 
     @Override
     public String toString() {
-        return "Services{" + "id_service=" + 
-                id_service + ", name=" + 
-                name + ", date_service=" + 
-                date_service + ", price=" + 
-                price + ", details=" + 
-                details + ", category=" + 
-                category + '}';
+        return "Services{" + "id_service="
+                + id_service + ", name="
+                + name + ", date_service="
+                + date_service + ", price="
+                + price + ", details="
+                + details + ", category="
+                + category + '}';
     }
 
     public int getId_service() {
@@ -72,7 +74,7 @@ public class Service {
     public void setCategory(Category category) {
         this.category = category;
     }
-    
+
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void listServices() {
@@ -93,30 +95,26 @@ public class Service {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error retrieving services: " + e.getMessage());
         }
     }
 
-    // Registrar un nuevo servicio
     public static void registerService() {
         System.out.println("---- Register Service ----");
-        scanner.nextLine(); // Consumir salto de línea
 
-        System.out.print("Enter Service Name: ");
-        String name = scanner.nextLine();
+        String name = inputWithValidation(scanner, "Enter Service Name: ", "[A-Za-z0-9 ]+", "Invalid name. Only letters, numbers, and spaces allowed.");
 
-        System.out.print("Enter Service Date (YYYY-MM-DD): ");
-        String dateService = scanner.nextLine();
+        String dateService = inputWithValidation(scanner, "Enter Service Date (YYYY-MM-DD): ",
+                "\\d{4}-\\d{2}-\\d{2}", "Invalid date format. Use YYYY-MM-DD.");
 
-        System.out.print("Enter Price: ");
-        double price = scanner.nextDouble();
+        double price = inputDoubleWithValidation(scanner, "Enter Price: ", "Invalid price. Please enter a positive number.");
 
-        scanner.nextLine(); // Consumir salto de línea
-        System.out.print("Enter Details: ");
-        String details = scanner.nextLine();
+        String details = inputOptional(scanner, "Enter Details: ");
 
-        System.out.print("Enter Category (Grooming, Medical, Training, Boarding): ");
-        String category = scanner.nextLine();
+        String category = inputWithValidation(scanner,
+                "Enter Category (Grooming, Medical, Training, Boarding): ",
+                "Grooming|Medical|Training|Boarding",
+                "Invalid category. Choose from: Grooming, Medical, Training, Boarding.");
 
         try (Connection conn = ConnectionDB.getConnection()) {
             String query = "INSERT INTO Services (name, date_service, price, details, category) VALUES (?, ?, ?, ?, ?)";
@@ -127,36 +125,36 @@ public class Service {
                 stmt.setString(4, details);
                 stmt.setString(5, category);
 
-                stmt.executeUpdate();
-                System.out.println("Service registered successfully.");
+                int rowsInserted = stmt.executeUpdate();
+                if (rowsInserted > 0) {
+                    System.out.println("Service registered successfully.");
+                }
             }
         } catch (SQLException e) {
             System.out.println("Error saving the service: " + e.getMessage());
         }
     }
 
-    // Actualizar un servicio
     public static void editService() {
         System.out.println("---- Edit Service ----");
-        System.out.print("Enter Service ID to edit: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Consumir salto de línea
+        listServices();
+        int serviceId = inputInt(scanner, "Enter Service ID to edit: ");
 
-        System.out.print("Enter new Service Name: ");
-        String name = scanner.nextLine();
+        String name = inputWithValidation(scanner, "Enter new Service Name: ",
+                "[A-Za-z0-9 ]+", "Invalid name. Only letters, numbers, and spaces allowed.");
 
-        System.out.print("Enter new Service Date (YYYY-MM-DD): ");
-        String dateService = scanner.nextLine();
+        String dateService = inputWithValidation(scanner, "Enter new Service Date (YYYY-MM-DD): ",
+                "\\d{4}-\\d{2}-\\d{2}", "Invalid date format. Use YYYY-MM-DD.");
 
-        System.out.print("Enter new Price: ");
-        double price = scanner.nextDouble();
+        double price = inputDoubleWithValidation(scanner, "Enter new Price: ",
+                "Invalid price. Please enter a positive number.");
 
-        scanner.nextLine(); // Consumir salto de línea
-        System.out.print("Enter new Details: ");
-        String details = scanner.nextLine();
+        String details = inputOptional(scanner, "Enter new Details: ");
 
-        System.out.print("Enter new Category (Grooming, Medical, Training, Boarding): ");
-        String category = scanner.nextLine();
+        String category = inputWithValidation(scanner,
+                "Enter new Category (Grooming, Medical, Training, Boarding): ",
+                "Grooming|Medical|Training|Boarding",
+                "Invalid category. Choose from: Grooming, Medical, Training, Boarding.");
 
         try (Connection conn = ConnectionDB.getConnection()) {
             String query = "UPDATE Services SET name = ?, date_service = ?, price = ?, details = ?, category = ? WHERE id_service = ?";
@@ -166,7 +164,7 @@ public class Service {
                 stmt.setDouble(3, price);
                 stmt.setString(4, details);
                 stmt.setString(5, category);
-                stmt.setInt(6, id);
+                stmt.setInt(6, serviceId);
 
                 int rowsAffected = stmt.executeUpdate();
                 if (rowsAffected > 0) {
@@ -176,20 +174,19 @@ public class Service {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error updating service: " + e.getMessage());
         }
     }
 
-    // Eliminar un servicio
     public static void deleteService() {
         System.out.println("---- Delete Service ----");
-        System.out.print("Enter Service ID to delete: ");
-        int id = scanner.nextInt();
+
+        int serviceId = inputInt(scanner, "Enter Service ID to delete: ");
 
         try (Connection conn = ConnectionDB.getConnection()) {
             String query = "DELETE FROM Services WHERE id_service = ?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setInt(1, id);
+                stmt.setInt(1, serviceId);
 
                 int rowsAffected = stmt.executeUpdate();
                 if (rowsAffected > 0) {
@@ -199,7 +196,53 @@ public class Service {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error deleting service: " + e.getMessage());
+        }
+    }
+
+    // Utility methods similar to those in the Owner management class
+    private static String inputWithValidation(Scanner scanner, String prompt, String regex, String errorMessage) {
+        String input;
+        while (true) {
+            System.out.print(prompt);
+            input = scanner.nextLine().trim();
+            if (Pattern.matches(regex, input)) {
+                break;
+            }
+            System.out.println(errorMessage);
+        }
+        return input;
+    }
+
+    private static String inputOptional(Scanner scanner, String prompt) {
+        System.out.print(prompt);
+        return scanner.nextLine().trim();
+    }
+
+    private static int inputInt(Scanner scanner, String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return Integer.parseInt(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number. Please try again.");
+            }
+        }
+    }
+
+
+    private static double inputDoubleWithValidation(Scanner scanner, String prompt, String errorMessage) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                double value = Double.parseDouble(scanner.nextLine().trim());
+                if (value >= 0) {
+                    return value;
+                }
+                System.out.println(errorMessage);
+            } catch (NumberFormatException e) {
+                System.out.println(errorMessage);
+            }
         }
     }
 }
